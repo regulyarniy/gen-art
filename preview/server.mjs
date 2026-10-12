@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "node:fs";
 import { join, dirname, extname, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -93,8 +93,10 @@ createServer(async (req, res) => {
   let path = url.pathname === "/" ? "/preview/index.html" : url.pathname;
   const safe = normalize(path).replace(/^(\.\.[/\\])+/, "");
   try {
-    const data = await readFile(join(root, safe));
-    res.writeHead(200, { "Content-Type": MIME[extname(safe)] ?? "text/plain" });
+    let fsPath = join(root, safe);
+    try { if (statSync(fsPath).isDirectory()) fsPath = join(fsPath, "index.html"); } catch {}
+    const data = await readFile(fsPath);
+    res.writeHead(200, { "Content-Type": MIME[extname(fsPath)] ?? "text/plain" });
     res.end(data);
   } catch {
     res.writeHead(404);
