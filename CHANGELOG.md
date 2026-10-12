@@ -1,5 +1,11 @@
 # Changelog — gen-art-zero
 
+## 2026-10-12 — Видео dots-ember для README
+
+- `assets/dots-ember.mp4` (6 с, 960×540, 30 fps): рой в палитре ember, курсор-лиссажу,
+  отрендерено попиксельным стендом из реального `dist/ga-dots.js`. Постер `assets/dots-ember.png`.
+- README: блок «Демо» — кликабельный постер → mp4 + ссылки на gh-pages.
+
 ## 2026-10-12 — Деплой на GitHub Pages
 
 - `npm run deploy` (`generator/deploy-pages.mjs`): статический бандл `deploy/` — витрина, 7 сайтов,

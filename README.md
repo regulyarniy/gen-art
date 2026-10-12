@@ -7,6 +7,14 @@
 Живое демо (gh-pages): https://regulyarniy.github.io/gen-art/
 Демо-сайты: https://regulyarniy.github.io/gen-art/sites/
 
+## Демо
+
+[![Дыхание толпы (ember) — курсор скользит по рою, точки вспухают](assets/dots-ember.png)](assets/dots-ember.mp4)
+
+- Видео: [assets/dots-ember.mp4](assets/dots-ember.mp4) — 6 с, 960×540, курсор-лиссажу поверх роя
+- Витрина пака: https://regulyarniy.github.io/gen-art/
+- Демо-сайты: https://regulyarniy.github.io/gen-art/sites/
+
 Скилл для агента: `@gen-art` (`.opencode/skills/gen-art/SKILL.md`) —
 генерация новых эффектов и сборка пака из отбора.
 
