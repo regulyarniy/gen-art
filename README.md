@@ -4,6 +4,9 @@
 Рантайм-зависимостей ноль: каждый файл из `dist/` самодостаточен,
 контракт один: `mount(el, opts) -> { destroy }`.
 
+Живое демо (gh-pages): https://regulyarniy.github.io/gen-art/
+Демо-сайты: https://regulyarniy.github.io/gen-art/sites/
+
 Скилл для агента: `@gen-art` (`.opencode/skills/gen-art/SKILL.md`) —
 генерация новых эффектов и сборка пака из отбора.
 

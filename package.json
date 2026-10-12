@@ -10,7 +10,8 @@
     "smoke": "node generator/smoke.mjs",
     "pack": "node generator/make-selected.mjs --from-decisions",
     "pack:manifest": "node generator/make-selected.mjs",
-    "preview": "node preview/server.mjs"
+    "preview": "node preview/server.mjs",
+    "deploy": "node generator/deploy-pages.mjs"
   },
   "engines": {
     "node": ">=20"

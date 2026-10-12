@@ -1,5 +1,12 @@
 # Changelog — gen-art-zero
 
+## 2026-10-12 — Деплой на GitHub Pages
+
+- `npm run deploy` (`generator/deploy-pages.mjs`): статический бандл `deploy/` — витрина, 7 сайтов,
+  `dist`, переписанные относительные пути, `.nojekyll`, самопроверка ссылок. Голосовалки не входят — им нужен API.
+- `.github/workflows/deploy.yml`: push в `main` → `generate` + сборка → официальный `deploy-pages`.
+- Нужны origin и включённый Pages (Source: GitHub Actions).
+
 ## 2026-10-12 — Демо-сайты: фикс позиционирования и фоны
 
 - Корень пустых боксов: `el.style.position || "relative"` затирал классовый `absolute` (бокс схлопывался в 0).
