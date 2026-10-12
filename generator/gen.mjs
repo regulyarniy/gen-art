@@ -41,7 +41,7 @@ function emit(outDir, name, content, budget) {
   return bytes;
 }
 
-const batches = {}; // batch -> catalog entries (staging, не пак)
+const batches = {}; // batch -> catalog entries (staging, not pack)
 for (const e of EFFECTS) {
   if (type !== "all" && type !== e.id) continue;
   const raw = e.seed ? e.build({ seed, palette }) : e.build({});
@@ -49,7 +49,7 @@ for (const e of EFFECTS) {
   const bytes = emit(out, e.file, (e.kind === "css" ? minCSS(raw) : minJS(raw)) + "\n", e.budget);
   (e.batch ? (batches[e.batch] ??= []) : catalog).push(effectMeta(e, bytes));
   if (e.batch) {
-    // кандидат не живёт в паке: трём stale-копию из dist
+    // candidate does not live in pack: wipe stale copy from dist
     const stale = join(distDir, e.file);
     if (existsSync(stale)) { rmSync(stale); console.log(`clean dist/${e.file} -> staging/${e.batch}/`); }
   }
@@ -68,12 +68,12 @@ if (type === "all") {
   }
 }
 
-// dist/ — только пак: трём файлы, которых больше нет в реестре (кроме ручных css и каталога)
+// dist/ — pack only: wipe files no longer in registry (except hand-made css and catalog)
 const keep = new Set([...EFFECTS.filter((e) => !e.batch).map((e) => e.file), "ga-icons.css", "ga-loader.css", "effects.json"]);
 for (const f of readdirSync(distDir)) {
   if ((f.endsWith(".js") || f.endsWith(".css")) && !keep.has(f)) {
     rmSync(join(distDir, f));
-    console.log(`prune dist/${f} (нет в реестре)`);
+    console.log(`prune dist/${f} (not in registry)`);
   }
 }
 

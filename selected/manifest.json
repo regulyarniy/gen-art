@@ -6,25 +6,25 @@
       "id": "bg-flow",
       "file": "ga-bg-flow.js",
       "global": "gaBgFlow",
-      "title": "Ветер над полем"
+      "title": "Wind Over the Field"
     },
     {
       "id": "dots",
       "file": "ga-dots.js",
       "global": "gaDots",
-      "title": "Дыхание толпы"
+      "title": "Breath of the Crowd"
     },
     {
       "id": "ribbon",
       "file": "ga-ribbon.js",
       "global": "gaRibbon",
-      "title": "Шёлк памяти"
+      "title": "Silk of Memory"
     },
     {
       "id": "topo",
       "file": "ga-topo.js",
       "global": "gaTopo",
-      "title": "Карта тишины"
+      "title": "Map of Silence"
     }
   ]
 }

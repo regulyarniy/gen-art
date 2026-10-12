@@ -1,24 +1,24 @@
-# Как писать новый эффект
+# How to write a new effect
 
-Новый батч = новый файл `generator/templates/batches/<batch>.mjs` + записи в реестре.
-Общие файлы (`canvas-extra`, `shader-extra`, `spinners-css`) — legacy, не дописывать.
+New batch = new file `generator/templates/batches/<batch>.mjs` + registry entries.
+Shared files (`canvas-extra`, `shader-extra`, `spinners-css`) are legacy, do not append to them.
 
-## Контракт рантайм-сниппета
+## Runtime snippet contract
 
-Сниппет — строка JS, результат builder-функции. После `eval`/`<script>` должен появиться
-`globalThis.gaXxx = { mount }`, где `mount(el, opts) -> { destroy }`.
+Snippet is a JS string, the result of a builder function. After `eval`/`<script>` there must appear
+`globalThis.gaXxx = { mount }`, where `mount(el, opts) -> { destroy }`.
 
-Обязательно внутри `mount`:
+Required inside `mount`:
 
-- canvas создаётся и аппендится в `el` (`position:absolute;inset:0`, у `el` выставить `position:relative` при нужде);
-- `ResizeObserver` (guard `typeof ResizeObserver != "undefined"`) + первичное `rs()`;
-- `IntersectionObserver`: `vis=false` останавливает rAF (`raf=0`), появление перезапускает;
+- canvas is created and appended to `el` (`position:absolute;inset:0`, set `position:relative` on `el` if needed);
+- `ResizeObserver` (guard `typeof ResizeObserver != "undefined"`) + initial `rs()`;
+- `IntersectionObserver`: `vis=false` stops rAF (`raf=0`), reappearing restarts it;
 - DPR cap: `Math.min(devicePixelRatio || 1, 1.5)`;
-- мышь: `pointermove` (passive) пишет `mx,my` 0..1; скролл: `fr()` считает `sx` 0..1 из `getBoundingClientRect`;
-- `matchMedia("(prefers-reduced-motion: reduce)")` → один статичный `draw(0,true)` без цикла;
-- `destroy()`/`off()`: `run=false`, `cancelAnimationFrame`, `disconnect` обоих обсерверов, снять листенеры, `cv.remove()`, для WebGL — `loseContext`.
+- mouse: `pointermove` (passive) writes `mx,my` 0..1; scroll: `fr()` computes `sx` 0..1 from `getBoundingClientRect`;
+- `matchMedia("(prefers-reduced-motion: reduce)")` → one static `draw(0,true)` without a loop;
+- `destroy()`/`off()`: `run=false`, `cancelAnimationFrame`, `disconnect` both observers, remove listeners, `cv.remove()`, for WebGL — `loseContext`.
 
-## Canvas: хелперы (импорт из `../canvas-extra.mjs`)
+## Canvas: helpers (import from `../canvas-extra.mjs`)
 
 ```js
 import { shell, lifecycle, footer } from "../canvas-extra.mjs";
@@ -32,26 +32,26 @@ export function buildMine({ seed = 1, palette }) {
 }
 ```
 
-- `lifecycle()` уже объявляет `cv,cx,W,Hh,raf,run,vis,mx,my,sx,ro,io,loop,ev,fr,rm`. НЕ объявляй их повторно.
-- `draw(dt)` обязан существовать; время — только через аккумулятор `T` (его объявляет `footer()` — `let L=0,T=R0()*80`), кадр `dt` в мс.
-- `footer()` делает ранний `return` при reduced-motion, иначе `rs();observe;raf=requestAnimationFrame(loop)`. После `footer()` в `body` ничего не дописывать — `shell()` сам добавит `return{destroy:off}`.
-- Сид: `H(seed)()`→число→`RR(n)`→функция (НЕ `RR(n())`). Респаун частиц — `Math.random()`.
-- Цвета только из `cols`/`bgc` (запечены генератором). Градиенты: `createRadialGradient` + `bgc` на внешнем стопе, не прозрачность через суффикс (hex `"00"` ломается на именованных цветах — у нас только hex, но проще `bgc`).
+- `lifecycle()` already declares `cv,cx,W,Hh,raf,run,vis,mx,my,sx,ro,io,loop,ev,fr,rm`. Do NOT redeclare them.
+- `draw(dt)` must exist; time — only via the `T` accumulator (declared by `footer()` — `let L=0,T=R0()*80`), frame `dt` in ms.
+- `footer()` does an early `return` on reduced-motion, otherwise `rs();observe;raf=requestAnimationFrame(loop)`. After `footer()` do not append anything to `body` — `shell()` adds `return{destroy:off}` itself.
+- Seed: `H(seed)()`→number→`RR(n)`→function (NOT `RR(n())`). Particle respawn — `Math.random()`.
+- Colors only from `cols`/`bgc` (baked by the generator). Gradients: `createRadialGradient` + `bgc` on the outer stop, not transparency via suffix (hex `"00"` suffix breaks on named colors — ours are hex-only, but `bgc` is simpler).
 
-## Шейдер: `shaderShell` (импорт из `../shader-extra.mjs`)
+## Shader: `shaderShell` (import from `../shader-extra.mjs`)
 
-- `fragBody` — только тело: хелперы + `void main(){...}`. Доступны uniform: `t` (сек), `m` (мышь 0..1), `s` (скролл 0..1), `r` (резолюция px). Выход `o`.
-- GLSL ES 3.00, `precision highp float` уже есть. Циклы с константными границами, без `texture`, без расширений.
-- Яркость держать в узде: `min(band,1.)`, затухание к краям `1.-.5*dot(u,u)`, иначе выбеленное молоко (кейс aurora v1).
-- Fallback на Canvas2D-градиент уже встроен в shell — проверять оба пути (smoke режет webgl2 и идёт в fallback; браузер — наоборот).
+- `fragBody` is the body only: helpers + `void main(){...}`. Available uniforms: `t` (sec), `m` (mouse 0..1), `s` (scroll 0..1), `r` (resolution px). Output `o`.
+- GLSL ES 3.00, `precision highp float` already present. Loops with constant bounds, no `texture`, no extensions.
+- Keep brightness in check: `min(band,1.)`, edge falloff `1.-.5*dot(u,u)`, otherwise washed-out milk (aurora v1 case).
+- Canvas2D-gradient fallback is already built into the shell — check both paths (smoke cuts webgl2 and goes to fallback; the browser is the opposite).
 
-## Бюджеты и минификатор
+## Budgets and minifier
 
-- Canvas ≤ 4096 Б, шейдер ≤ 5120 Б, CSS ≤ 1024 Б (считать после `minJS`/`minCSS`).
-- `minJS` режет пробелы вокруг `{}();,=+-*/<>|&?:` — НЕ писать код, зависящий от пробелов (шаблонные строки с пробелами внутри — ок, но `return\n{...}` сломается: `return` и `{` на разных строках давать нельзя).
-- Без `//`-комментариев внутри сниппета (стираются построчно только с начала строки — не рисковать вообще).
+- Canvas ≤ 4096 B, shader ≤ 5120 B, CSS ≤ 1024 B (counted after `minJS`/`minCSS`).
+- `minJS` strips spaces around `{}();,=+-*/<>|&?:` — do NOT write code that depends on spaces (template strings with spaces inside are fine, but `return\n{...}` will break: `return` and `{` must not go on different lines).
+- No `//` comments inside the snippet (they are stripped line-wise only from line start — do not risk it at all).
 
-## Проверка нового эффекта
+## Verifying a new effect
 
 ```pwsh
 node generator/gen.mjs --type <id> --seed 7 --palette 0
@@ -60,20 +60,20 @@ node generator/check.mjs
 node generator/smoke.mjs
 ```
 
-Потом живьём: добавить бокс в `preview/canvas-check.html` или `preview/shader-check.html`,
-`node preview/server.mjs`, открыть, скриншот, консоль пустая. Только потом — в curate на голосование.
+Then live: add a box to `preview/canvas-check.html` or `preview/shader-check.html`,
+`node preview/server.mjs`, open, screenshot, empty console. Only then — to curate for voting.
 
-## Параметры эффектов (попап в превью)
+## Effect parameters (popup in preview)
 
-- Каждый эффект пака описывает до 8 параметров в `generator/lib/effects.mjs`, таблица `PARAMS`.
-  Запись: `[key, type, min, max, step, def, label]`, type ∈ `range | int | toggle | color`.
-- Сниппет читает их только как `o.key ?? baked`, дефолт в схеме обязан совпадать с запечённым буквально.
-- Числовые пачки (`SP`, `N`, ...) объявлять ДО первого использования в `draw` (TDZ ловит params-smoke).
-- `dist/effects.json` несёт `params`, `bytes`, `budget` — их читает попап `preview/index.html`
-  (бейдж `вес / бюджет` + контролы; для canvas дописывает `bg` и пресет палитры → `o.bg`/`o.colors`).
-- Попап: таблица `BOX` в index.html идёт строго в порядке массива `H` (сначала все JS).
-- CSS-эффекты параметризуются переменными `--ga-z` (размер) и `--ga-d` (множитель длительности);
-  попап ставит их на демо-элемент, speed инвертируется (`--ga-d = 1/v`).
-- Шейдеры: shell даёт `o.speed/o.zoom/o.bright` через uniform `z`, `b` (frag правит сам эффект).
-- Проверки: `node <tmp>/params-smoke.mjs [фильтр]` (монтирует всё с min/def/max + 40 кадров,
-  оба reduced-режима), `node <tmp>/popup-check.mjs` (BOX/каталог/порядок/бюджеты).
+- Each pack effect declares up to 8 parameters in `generator/lib/effects.mjs`, the `PARAMS` table.
+  Entry: `[key, type, min, max, step, def, label]`, type ∈ `range | int | toggle | color`.
+- The snippet reads them only as `o.key ?? baked`, the default in the schema must match the baked value literally.
+- Numeric packs (`SP`, `N`, ...) declare BEFORE first use in `draw` (TDZ is caught by params-smoke).
+- `dist/effects.json` carries `params`, `bytes`, `budget` — read by the `preview/index.html` popup
+  (`weight / budget` badge + controls; for canvas it appends `bg` and the palette preset → `o.bg`/`o.colors`).
+- Popup: the `BOX` table in index.html goes strictly in the order of the `H` array (all JS first).
+- CSS effects are parameterized with variables `--ga-z` (size) and `--ga-d` (duration multiplier);
+  the popup sets them on the demo element, speed is inverted (`--ga-d = 1/v`).
+- Shaders: the shell provides `o.speed/o.zoom/o.bright` via uniforms `z`, `b` (the frag amends the effect itself).
+- Checks: `node <tmp>/params-smoke.mjs [filter]` (mounts everything with min/def/max + 40 frames,
+  both reduced-modes), `node <tmp>/popup-check.mjs` (BOX/catalog/order/budgets).

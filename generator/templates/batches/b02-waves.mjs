@@ -1,8 +1,8 @@
 // b02-waves — dot-terrain promoted to pack; other 9 candidates rejected and removed.
-// Builder остаётся здесь как дом промотированного эффекта.
+// Builder stays here as the home of the promoted effect.
 import { shell, lifecycle, footer } from "../canvas-extra.mjs";
 
-// Точечный рельеф: высота encoded размером точки.
+// Dot relief: height encoded as dot size.
 export function buildDotTerrain({ seed = 1, palette }) {
   const consts = `const COLS=${JSON.stringify(palette.strokes)},BG=${JSON.stringify(palette.bg)};`;
   const body = `const cols=o.colors??COLS,bgc=o.bg??BG;const R0=Math.random;`

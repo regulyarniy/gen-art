@@ -1,24 +1,24 @@
-# Выбранное (seed 7, palette abyss)
+# Selected (seed 7, palette abyss)
 
-4 виньетки, ноль зависимостей. Суммарно ~10.6 КБ одним файлом.
+4 vignettes, zero dependencies. Total ~10.9 KB single file.
 
-## Вариант А — один файл
+## Option A — single file
 
 ```html
 <script src="ga-selected.js"></script>
 <script>
-  const h1 = gaBgFlow.mount(document.getElementById('hero'), { count: 550 }); // Ветер над полем
-  const h2 = gaRibbon.mount(document.getElementById('silk'));                 // Шёлк памяти
-  const h3 = gaDots.mount(document.getElementById('crowd'));                  // Дыхание толпы
-  const h4 = gaTopo.mount(document.getElementById('map'));                    // Карта тишины
-  // h1.destroy() при размонтировании
+  const h1 = gaBgFlow.mount(document.getElementById('hero'), { count: 550 }); // Wind Over the Field
+  const h2 = gaRibbon.mount(document.getElementById('silk'));                 // Silk of Memory
+  const h3 = gaDots.mount(document.getElementById('crowd'));                  // Breath of the Crowd
+  const h4 = gaTopo.mount(document.getElementById('map'));                    // Map of Silence
+  // h1.destroy() on unmount
 </script>
 ```
 
-## Вариант Б — файлы по отдельности
+## Option B — separate files
 
-`ga-bg-flow.js` (2.83 КБ), `ga-ribbon.js` (2.72 КБ),
-`ga-dots.js` (2.41 КБ), `ga-topo.js` (2.30 КБ) — каждый самодостаточен.
+`ga-bg-flow.js` (2.88 KB), `ga-ribbon.js` (2.80 KB),
+`ga-dots.js` (2.50 KB), `ga-topo.js` (2.38 KB) — each self-contained.
 
-`manifest.json` — машиночитаемый состав комплекта.
-`demo.html` — проверка, что всё едет одним тегом.
+`manifest.json` — machine-readable pack manifest.
+`demo.html` — verifies everything ships in one tag.

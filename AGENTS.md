@@ -1,37 +1,37 @@
 # AGENTS.md — gen-art-zero
 
-Офлайн-генератор самодостаточных generative-сниппетов `mount(el, opts) → { destroy }`.
-Ноль зависимостей в рантайме. Shell — PowerShell (`;` вместо `&&`).
+Offline generator of self-contained generative snippets `mount(el, opts) → { destroy }`.
+Zero runtime dependencies. Shell — PowerShell (`;` instead of `&&`).
 
-## Структура
+## Structure
 
-- `dist/` — ТОЛЬКО утверждённый пак. `dist/effects.json` — каталог (`id,file,global,kind,title,meaning,opts,demo,bytes,budget,params`).
-- `staging/<batch>/` — кандидаты батча + `effects.json`. Удаляется после разбора.
-- `generator/lib/effects.mjs` — единый реестр. Поле `batch:"<id>"` = кандидат (едет в staging); без поля = пак (едет в dist).
-- `generator/templates/batches/<batch>.mjs` — builder-функции батча (один файл на батч). Общие `canvas-extra` / `shader-extra` / `spinners-css` — legacy: новых эффектов туда не добавлять, править только багафиксы.
-- `preview/index.html` — РУЧНАЯ витрина пака (карточки + script + mount захардкожены). Обязана зеркалить `dist` после каждого разбора.
-- `preview/curate.html?batch=<id>` — голосование по кандидатам (`?batch=all` — полное, `?batch=main` — галерея пака).
-- `preview/server.mjs` — статика + API (`/api/batches`, `/api/decisions`, `/api/decide`, `/api/reset`). Перед опросом запускать СВЕЖИМ кодом.
-- `preview/sites/` — демо-страницы архетипов (лендинги, админка, …) + `index.html`-указатель. Только `dist/` с `?v=2`, `mount` с opts из ключей `PARAMS`, destroy на unload. Проверка: `node <tmp>/sites-check.mjs`.
-- `data/decisions[-<batch>].json` — голоса, `data/batches.json` — итоги разборов. `selected/` — отдельный ручной пак, при разборе не трогать.
+- `dist/` — approved pack ONLY. `dist/effects.json` — catalog (`id,file,global,kind,title,meaning,opts,demo,bytes,budget,params`).
+- `staging/<batch>/` — batch candidates + `effects.json`. Deleted after triage.
+- `generator/lib/effects.mjs` — single registry. Field `batch:"<id>"` = candidate (goes to staging); no field = pack (goes to dist).
+- `generator/templates/batches/<batch>.mjs` — batch builder functions (one file per batch). Shared `canvas-extra` / `shader-extra` / `spinners-css` — legacy: do not add new effects there, bugfixes only.
+- `preview/index.html` — MANUAL pack showcase (cards + script + mount hardcoded). Must mirror `dist` after every triage.
+- `preview/curate.html?batch=<id>` — candidate curation (`?batch=all` — full, `?batch=main` — pack gallery).
+- `preview/server.mjs` — static + API (`/api/batches`, `/api/decisions`, `/api/decide`, `/api/reset`). Before voting, run with FRESH code.
+- `preview/sites/` — archetype demo pages (landings, admin, …) + `index.html` pointer. Only `dist/` with `?v=2`, `mount` with opts from `PARAMS` keys, destroy on unload. Check: `node <tmp>/sites-check.mjs`.
+- `data/decisions[-<batch>].json` — votes, `data/batches.json` — triage results. `selected/` — separate manual pack, do not touch during triage.
 
-## Контракт рантайм-сниппета
+## Runtime snippet contract
 
-- `globalThis.gaXxx = { mount }`, ноль импортов и внешних ресурсов.
-- Внутри `mount`: canvas `position:absolute;inset:0`, позиционирование `el` — только если computed `static` (классовые absolute/fixed/sticky не затирать инлайном!), `ResizeObserver` (guard `typeof`), `IntersectionObserver` (пауза вне вьюпорта), DPR cap 1.5, `pointermove` (passive) + скролл через `fr()`, `prefers-reduced-motion` = 1 статичный кадр (обязательно после `rs()`), `destroy()` чистит всё + `loseContext` для WebGL.
-- Canvas: хелперы `shell/lifecycle/footer` из `canvas-extra.mjs`; `draw(dt)` существует, время только через `T`; после `footer()` ничего не дописывать. Без `//`-комментариев, без `in window` (только `typeof`), `return` и `{` на одной строке (минификатор).
-- Шейдер: `shaderShell`, GLSL ES 3.00, uniform `t,m,s,r` (+`z,b` для зума/яркости), выход `o`, яркость в узде (`min`, затухание к краям).
-- Бюджеты (после минификации): canvas ≤ 4096 Б, шейдер ≤ 5120 Б, CSS ≤ 1024 Б. Скобки в shell-обёртках проверять `node --check`.
+- `globalThis.gaXxx = { mount }`, zero imports and external resources.
+- Inside `mount`: canvas `position:absolute;inset:0`, `el` positioning — only if computed `static` (do not overwrite class-based absolute/fixed/sticky with inline!), `ResizeObserver` (guard `typeof`), `IntersectionObserver` (pause outside viewport), DPR cap 1.5, `pointermove` (passive) + scroll via `fr()`, `prefers-reduced-motion` = 1 static frame (always after `rs()`), `destroy()` cleans everything + `loseContext` for WebGL.
+- Canvas: helpers `shell/lifecycle/footer` from `canvas-extra.mjs`; `draw(dt)` exists, time only via `T`; nothing after `footer()`. No `//` comments, no `in window` (only `typeof`), `return` and `{` on one line (minifier).
+- Shader: `shaderShell`, GLSL ES 3.00, uniforms `t,m,s,r` (+`z,b` for zoom/brightness), output `o`, brightness constrained (`min`, fade to edges).
+- Budgets (after minification): canvas ≤ 4096 B, shader ≤ 5120 B, CSS ≤ 1024 B. Check parens in shell wrappers with `node --check`.
 
-## Параметры эффектов
+## Effect params
 
-- До 8 штук на эффект, таблица `PARAMS` в `generator/lib/effects.mjs`: `[key, type, min, max, step, def, label]`, type ∈ `range|int|toggle|color`.
-- Сниппет читает только `o.key ?? baked`, дефолт в схеме = запечённому буквально. Пачки (`SP`, `N`, …) объявлять ДО использования в `draw` (TDZ).
-- CSS: переменные `--ga-z` (размер), `--ga-d` (множитель длительности, speed инвертируется).
-- Попап `preview/index.html`: таблица `BOX` идёт СТРОГО в порядке массива `H` (сначала все JS). Сериализатор кода — только отличия от дефолтов.
-- Стенды (вне репо, `%LOCALAPPDATA%\Temp\opencode\`): `params-smoke.mjs [фильтр]` (min/def/max + 40 кадров + оба reduced-режима), `popup-check.mjs`, `eye-check.mjs`.
+- Up to 8 per effect, `PARAMS` table in `generator/lib/effects.mjs`: `[key, type, min, max, step, def, label]`, type ∈ `range|int|toggle|color`.
+- Snippet reads only `o.key ?? baked`, schema default = baked value literally. Batches (`SP`, `N`, …) declare BEFORE use in `draw` (TDZ).
+- CSS: variables `--ga-z` (size), `--ga-d` (duration multiplier, speed inverted).
+- Popup in `preview/index.html`: `BOX` table goes STRICTLY in `H` array order (all JS first). Code serializer — only deviations from defaults.
+- Stands (outside repo, `%LOCALAPPDATA%\Temp\opencode\`): `params-smoke.mjs [filter]` (min/def/max + 40 frames + both reduced modes), `popup-check.mjs`, `eye-check.mjs`.
 
-## Команды
+## Commands
 
 ```pwsh
 node generator/gen.mjs --type all --seed 7 --palette 0
@@ -40,12 +40,12 @@ node generator/smoke.mjs
 node preview/server.mjs
 ```
 
-## Коммиты
+## Commits
 
-Каждое законченное изменение (батч сгенерирован / батч разобран / фича / фикс) — отдельный коммит на русском, в форме `тип: что сделано`. Рабочее дерево перед коммитом — зелёное (`gen` без OVER, `check`, `smoke`).
+Each finished change (batch generated / batch triaged / feature / fix) — separate commit in English, as `type: what was done`. Working tree green before commit (`gen` with no OVER, `check`, `smoke`).
 
-## Деплой на GitHub Pages
+## Deploy to GitHub Pages
 
-- `npm run deploy` собирает `deploy/` (витрина + сайты + `dist`, пути переписаны, `.nojekyll`). Каталог генерируемый, в git не коммитится.
-- `.github/workflows/deploy.yml`: push в `main` → пересборка пака → публикация `deploy/` официальным `deploy-pages`.
-- Нужен remote origin + включённый Pages (Source: GitHub Actions) в настройках репозитория.
+- `npm run deploy` builds `deploy/` (showcase + sites + `dist`, paths rewritten, `.nojekyll`). Generated directory, not committed to git.
+- `.github/workflows/deploy.yml`: push to `main` → pack rebuild → publish `deploy/` via official `deploy-pages`.
+- Needs remote origin + enabled Pages (Source: GitHub Actions) in repo settings.

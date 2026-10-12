@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Отбор виньеток — принять / отклонить</title>
+<title>Curate vignettes — accept / reject</title>
 <style>
   :root{color-scheme:dark}
   body{margin:0;background:#05070c;color:#e5e7eb;font:15px/1.5 system-ui,sans-serif}
@@ -41,29 +41,29 @@
 <body>
 <div class="wrap">
   <div class="top">
-    <h1>Отбор виньеток <span class="pill" id="batchpill"></span></h1>
+    <h1>Curating vignettes <span class="pill" id="batchpill"></span></h1>
     <span class="pill" id="counter"></span>
     <span class="pill">✅ <b id="okn">0</b> · ❌ <s id="non">0</s></span>
-    <span class="sync" id="sync">связь…</span>
+    <span class="sync" id="sync">connecting…</span>
   </div>
   <div class="dots" id="dots"></div>
   <div id="quiz">
-    <div class="stage" id="stage"><p style="opacity:.5">загрузка эффектов…</p></div>
+    <div class="stage" id="stage"><p style="opacity:.5">loading effects…</p></div>
     <div class="meta"><h2><span id="title"></span><span class="file" id="file"></span></h2><p id="meaning"></p></div>
     <div class="btns" id="votebtns">
-      <button id="back" title="к предыдущему">← назад</button>
-      <button id="no">❌ отклонить</button>
-      <button id="yes">✅ принять</button>
+      <button id="back" title="to the previous one">← back</button>
+      <button id="no">❌ reject</button>
+      <button id="yes">✅ accept</button>
     </div>
-    <p class="hint" id="votehint"><kbd>←</kbd> отклонить · <kbd>→</kbd> принять · <kbd>Backspace</kbd> назад. Каждый голос сразу пишется на диск — агент подхватит итог сам, копировать ничего не нужно.</p>
+    <p class="hint" id="votehint"><kbd>←</kbd> reject · <kbd>→</kbd> accept · <kbd>Backspace</kbd> back. Every vote is written to disk immediately — the agent picks up the result itself, nothing to copy.</p>
   </div>
   <div id="done">
-    <h2>Итог: принято <span id="okn2"></span></h2>
+    <h2>Result: accepted <span id="okn2"></span></h2>
     <ul id="list"></ul>
     <div class="row">
-      <button id="restart">Пройти заново</button>
+      <button id="restart">Start over</button>
     </div>
-    <p class="hint">Решения уже лежат на диске — просто скажи агенту «разбирай батч», он добавит принятые в пак, а отклонённые удалит полностью.</p>
+    <p class="hint">Decisions are already on disk — just tell the agent to 'triage the batch': it adds accepted ones to the pack and deletes rejected ones entirely.</p>
   </div>
 </div>
 <script>
@@ -123,7 +123,7 @@ const gallery = () => BATCH === "main";
 async function show() {
   if (handle) { try { handle.destroy(); } catch (e) {} handle = null; }
   const t = ITEMS[state.i];
-  $("stage").innerHTML = `<p style="opacity:.5">загрузка…</p>`;
+  $("stage").innerHTML = `<p style="opacity:.5">loading…</p>`;
   try {
     if (t.kind === "css") {
       await ensureCSS(t);
@@ -133,9 +133,9 @@ async function show() {
       handle = window[t.global].mount($("stage"), t.opts || {});
     }
   }
-  catch (e) { $("stage").innerHTML = `<p style="padding:20px">Ошибка: ${e}</p>`; }
+  catch (e) { $("stage").innerHTML = `<p style="padding:20px">Error: ${e}</p>`; }
   $("title").textContent = `${state.i + 1}. ${t.title}`;
-  $("file").textContent = `${t.file} · ${(t.bytes / 1024).toFixed(2)} КБ`;
+  $("file").textContent = `${t.file} · ${(t.bytes / 1024).toFixed(2)} KB`;
   $("meaning").textContent = t.meaning;
   $("counter").textContent = `${state.i + 1} / ${ITEMS.length}`;
   $("back").disabled = state.i === 0;
@@ -146,8 +146,8 @@ async function vote(ok, src) {
   const t = ITEMS[state.i];
   state.dec[t.id] = ok;
   saveLocal();
-  try { await api("/api/decide", { id: t.id, ok, src }); setSync("сохранено ✓"); }
-  catch (e) { setSync("нет связи с сервером — только браузер", true); }
+  try { await api("/api/decide", { id: t.id, ok, src }); setSync("saved ✓"); }
+  catch (e) { setSync("no server link — browser only", true); }
   if (state.i < ITEMS.length - 1) { state.i++; saveLocal(); show(); }
   else { saveLocal(); finish(); }
 }
@@ -155,15 +155,15 @@ function finish() {
   if (handle) { try { handle.destroy(); } catch (e) {} handle = null; }
   $("quiz").style.display = "none"; $("done").style.display = "block";
   const acc = ITEMS.filter((t) => state.dec[t.id]);
-  $("okn2").textContent = acc.length + " из " + ITEMS.length;
+  $("okn2").textContent = acc.length + " of " + ITEMS.length;
   $("list").innerHTML = acc.map((t) => `<li>✅ <b>${t.title}</b> <span style="opacity:.5;font-size:12px">${t.file}</span></li>`).join("")
-    || "<li>Ничего не принято.</li>";
+    || "<li>Nothing accepted.</li>";
   counts(); renderDots();
 }
 async function restart() {
   state = { i: 0, dec: {} }; saveLocal();
-  try { await api("/api/reset", {}, "POST"); setSync("сохранено ✓"); }
-  catch (e) { setSync("нет связи с сервером — только браузер", true); }
+  try { await api("/api/reset", {}, "POST"); setSync("saved ✓"); }
+  catch (e) { setSync("no server link — browser only", true); }
   $("done").style.display = "none"; $("quiz").style.display = "block"; show();
 }
 $("yes").onclick = () => vote(true, "click");
@@ -184,7 +184,7 @@ addEventListener("keydown", (e) => {
       BATCH = (b.batches || []).length ? b.batches[b.batches.length - 1].batch : "main";
     }
     if (BATCH === "all") {
-      // полное голосование: пак + все батчи одним списком
+      // full voting: pack + all batches as one list
       const pack = await (await fetch(`../dist/effects.json?v=2`)).json();
       ITEMS = pack.effects.map((t) => ({ ...t, base: "../dist" }));
       const b = await (await fetch("/api/batches")).json();
@@ -192,21 +192,21 @@ addEventListener("keydown", (e) => {
         const cat = await (await fetch(`../staging/${batch}/effects.json?v=2`)).json();
         for (const t of cat.effects) ITEMS.push({ ...t, base: `../staging/${batch}` });
       }
-      $("batchpill").textContent = `всё сразу: ${ITEMS.length}`;
+      $("batchpill").textContent = `everything: ${ITEMS.length}`;
     } else {
       const main = BATCH === "main";
       BASE = main ? "../dist" : `../staging/${BATCH}`;
       const cat = await (await fetch(`${BASE}/effects.json?v=2`)).json();
       ITEMS = cat.effects.map((t) => ({ ...t, base: BASE }));
-      $("batchpill").textContent = main ? "утверждённый пак" : "батч " + BATCH;
+      $("batchpill").textContent = main ? "approved pack" : "batch " + BATCH;
       if (main) {
         $("votebtns").style.display = "none";
-        $("votehint").innerHTML = `Это утверждённый пак — здесь только смотрим. Новые кандидаты живут в батчах (<code>?batch=…</code>), всё сразу — <code>?batch=all</code>.`;
+        $("votehint").innerHTML = `This is the approved pack — view only. New candidates live in batches (<code>?batch=…</code>), everything at once is <code>?batch=all</code>.`;
       }
     }
     await Promise.all(ITEMS.filter((t) => t.kind !== "css").map((t) => loadScript(`${t.base}/${t.file}?v=2`)));
   } catch (e) {
-    $("stage").innerHTML = `<p style="padding:20px">Не загрузилось: ${e}. Нужен <code>node preview/server.mjs</code> и <code>node generator/gen.mjs</code>.</p>`;
+    $("stage").innerHTML = `<p style="padding:20px">Failed to load: ${e}. Needs <code>node preview/server.mjs</code> and <code>node generator/gen.mjs</code>.</p>`;
     return;
   }
   const local = loadLocal();
@@ -217,9 +217,9 @@ addEventListener("keydown", (e) => {
       for (const [id, v] of Object.entries(srv.votes || {})) {
         if (ITEMS.some((t) => t.id === id)) state.dec[id] = !!v.ok;
       }
-      setSync("связь с диском ✓");
-    } catch (e) { setSync("нет связи с сервером — только браузер", true); }
-  } else setSync("галерея");
+      setSync("disk link ✓");
+    } catch (e) { setSync("no server link — browser only", true); }
+  } else setSync("gallery");
   const voted = ITEMS.filter((t) => t.id in state.dec).length;
   state.i = Math.min(voted, ITEMS.length - 1);
   if (!gallery() && voted === ITEMS.length && ITEMS.length) finish(); else show();

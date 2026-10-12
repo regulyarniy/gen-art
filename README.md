@@ -1,31 +1,31 @@
 # gen-art-zero
 
-[![Дыхание толпы (ember) — живое демо](assets/dots-ember.gif)](https://regulyarniy.github.io/gen-art/sites/)
+[![Breath of the Crowd (ember) — live demo](assets/dots-ember.gif)](https://regulyarniy.github.io/gen-art/)
 
-Офлайн-генератор zero-runtime generative art сниппетов: каждый файл из `dist/` самодостаточен, контракт — `mount(el, opts) -> { destroy }`.
+Offline generator of zero-runtime generative art snippets: each file in `dist/` is self-contained, contract — `mount(el, opts) -> { destroy }`.
 
-- Витрина: https://regulyarniy.github.io/gen-art/
-- Демо-сайты: https://regulyarniy.github.io/gen-art/sites/
+- Showcase: https://regulyarniy.github.io/gen-art/
+- Demo sites: https://regulyarniy.github.io/gen-art/sites/
 
-## Вставка
+## Embed
 
 ```html
 <div id="hero" style="min-height:320px"></div>
 <script src="ga-ribbon.js"></script>
 <script>
   const h = gaRibbon.mount(document.getElementById('hero'));
-  // h.destroy() при размонтировании
+  // h.destroy() on unmount
 </script>
 ```
 
-## Разработка
+## Development
 
 ```pwsh
-npm run generate  # пак из реестра
-npm run check     # синтаксис и бюджеты
+npm run generate  # pack from registry
+npm run check     # syntax and budgets
 npm run smoke     # mount/destroy
 npm run preview   # http://localhost:5173/
-npm run deploy    # статический бандл для gh-pages
+npm run deploy    # static bundle for gh-pages
 ```
 
-Новые эффекты — батчами через скилл `@gen-art`: генерация → опрос в `preview/curate.html?batch=<id>` → разбор в пак. Детали: `AGENTS.md`.
+New effects — in batches via `@gen-art` skill: generation → vote in `preview/curate.html?batch=<id>` → triage into pack. Details: `AGENTS.md`.

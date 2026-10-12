@@ -1,75 +1,75 @@
 # Changelog — gen-art-zero
 
-## 2026-10-12 — README ужато
+## 2026-10-12 — README trimmed
 
-- Убраны таблица эффектов и видео (осталась GIF-ссылка на демо вверху).
-  Эффекты смотрят в живом демо, а не в списке. `assets/dots-ember.mp4/.png` удалены.
+- Removed effect table and video (GIF link to demo left at top).
+  See them in the live demo, not in a list. `assets/dots-ember.mp4/.png` removed.
 
-## 2026-10-12 — Видео dots-ember для README
+## 2026-10-12 — dots-ember video for README
 
-- `assets/dots-ember.mp4` (6 с, 960×540, 30 fps): рой в палитре ember, курсор-лиссажу,
-  отрендерено попиксельным стендом из реального `dist/ga-dots.js`. Постер `assets/dots-ember.png`.
-- README: блок «Демо» — кликабельный постер → mp4 + ссылки на gh-pages.
+- `assets/dots-ember.mp4` (6 s, 960×540, 30 fps): swarm in ember palette, lissajous cursor,
+  rendered with pixel stand from real `dist/ga-dots.js`. Poster `assets/dots-ember.png`.
+- README: "Demo" block — clickable poster → mp4 + links to gh-pages.
 
-## 2026-10-12 — Деплой на GitHub Pages
+## 2026-10-12 — Deploy to GitHub Pages
 
-- `npm run deploy` (`generator/deploy-pages.mjs`): статический бандл `deploy/` — витрина, 7 сайтов,
-  `dist`, переписанные относительные пути, `.nojekyll`, самопроверка ссылок. Голосовалки не входят — им нужен API.
-- `.github/workflows/deploy.yml`: push в `main` → `generate` + сборка → официальный `deploy-pages`.
-- Нужны origin и включённый Pages (Source: GitHub Actions).
+- `npm run deploy` (`generator/deploy-pages.mjs`): static bundle `deploy/` — showcase, 7 sites,
+  `dist`, rewritten relative paths, `.nojekyll`, link self-check. Curation pages excluded — they need API.
+- `.github/workflows/deploy.yml`: push to `main` → `generate` + build → official `deploy-pages`.
+- Needs origin and enabled Pages (Source: GitHub Actions).
 
-## 2026-10-12 — Демо-сайты: фикс позиционирования и фоны
+## 2026-10-12 — Demo sites: positioning fix and backgrounds
 
-- Корень пустых боксов: `el.style.position || "relative"` затирал классовый `absolute` (бокс схлопывался в 0).
-  Теперь во всех shell'ах — проверка computed-стиля, трогаем только `static`.
-- `tetris-rain`: фигуры стартуют частично в кадре и падают быстрее (раньше первых было видно через ~15 с).
-- Фоновые CTA-полосы с эффектами на всех 7 страницах + фиксированный слой летучих мышей на horror.
-  Все страницы проверены скриншотами в Edge.
+- Root cause of empty boxes: `el.style.position || "relative"` overwrote class-based `absolute` (box collapsed to 0).
+  Now in all shells — computed-style check, touch only `static`.
+- `tetris-rain`: shapes start partially in frame and fall faster (previously the first ones were visible after ~15 s).
+- Background CTA strips with effects on all 7 pages + fixed bat layer on horror.
+  All pages verified with screenshots in Edge.
 
-## 2026-10-12 — Демо-сайты
+## 2026-10-12 — Demo sites
 
-- `preview/sites/`: 7 страниц-архетипов на паке из `dist/` + указатель — SaaS-лендинг, админка,
-  хоррор-квест, финтех, эко, музыка, праздники (включая светлую тему через `o.bg/o.colors`).
-  Задействованы все 29 эффектов. Проверка: `sites-check` (синтаксис, привязки, ключи opts).
-- Фикс сервера: путь-каталог (`/preview/sites/`) отдаёт свой `index.html`, а не 404.
+- `preview/sites/`: 7 archetype pages on the `dist/` pack + pointer — SaaS landing, admin,
+  horror quest, fintech, eco, music, holidays (including light theme via `o.bg/o.colors`).
+  All 29 effects used. Check: `sites-check` (syntax, bindings, opts keys).
+- Server fix: directory path (`/preview/sites/`) serves its own `index.html`, not 404.
 
-## 2026-10-12 — Параметры, попап и код для вставки
+## 2026-10-12 — Params, popup, and embed code
 
-- Все 29 эффектов пака параметризованы (2–4 параметра: скорость, количество, размеры + релевантные).
-  Сниппеты читают `o.key ?? baked`, схема — таблица `PARAMS` в реестре, каталог отдаёт `params/budget/bytes`.
-- Попап в `preview/index.html`: кнопка ⚙ на каждой карточке, живые контролы, общие «Фон»/«Цвета» для canvas,
-  бейдж `вес / бюджет` на карточке, блок копируемого кода инициализации с текущими настройками.
-- Шейдер-shell: `o.speed/o.zoom/o.bright` через uniform `z`, `b` (эффект — `plasma-sea`).
-- CSS-спиннеры: `--ga-z` (размер), `--ga-d` (множитель длительности).
-- Багфиксы: `footer()` возвращал `undefined` в reduced-пути; статичный кадр рисовался до `rs()`
-  (у `radar-sonar` — вечный цикл при нулевом шаге); порядок `T/L` в `bg-flow` (хрупкость при синхронном IO).
-- Стенды: `params-smoke` (границы параметров + кадры + оба reduced-режима), `popup-check`, `eye-check`.
+- All 29 pack effects parameterized (2–4 params: speed, count, sizes + relevant).
+  Snippets read `o.key ?? baked`, schema — `PARAMS` table in registry, catalog returns `params/budget/bytes`.
+- Popup in `preview/index.html`: ⚙ button on each card, live controls, shared "Background"/"Colors" for canvas,
+  `weight / budget` badge on card, copyable init code block with current settings.
+- Shader shell: `o.speed/o.zoom/o.bright` via uniforms `z`, `b` (effect — `plasma-sea`).
+- CSS spinners: `--ga-z` (size), `--ga-d` (duration multiplier).
+- Bugfixes: `footer()` returned `undefined` in reduced path; static frame drawn before `rs()`
+  (at `radar-sonar` — infinite loop at zero step); `T/L` order in `bg-flow` (fragile with sync IO).
+- Stands: `params-smoke` (param bounds + frames + both reduced modes), `popup-check`, `eye-check`.
 
-## 2026-10-12 — Батч b04-mad разобран (пак 12 → 29)
+## 2026-10-12 — Batch b04-mad triaged (pack 12 → 29)
 
-- Принято 17: black-hole, glass-rain, magnet-field, jelly-float, boids, city-night, moire-rings,
+- Accepted 17: black-hole, glass-rain, magnet-field, jelly-float, boids, city-night, moire-rings,
   tetris-rain, ocean-layers, bacteria, radar-sonar, iso-cubes, confetti-storm, spider-eyes,
-  clock-particles, plasma-sea, spin-glitch. Отклонено 33 (удалены вообще).
-- `spider-eyes` доработан: миндалевидные глаза с веками, ресничный контур, складка века;
-  смещение зрачка клампнуто (не вываливается при курсоре вне контейнера).
-- Витрина `preview/index.html` обновлена вручную (29 карточек).
+  clock-particles, plasma-sea, spin-glitch. Rejected 33 (deleted entirely).
+- `spider-eyes` reworked: almond eyes with lids, lash outline, lid fold;
+  pupil offset clamped (does not escape when cursor is outside container).
+- Showcase `preview/index.html` updated by hand (29 cards).
 
-## 2026-10-12 — Батч b04-mad сгенерирован
+## 2026-10-12 — Batch b04-mad generated
 
-- 50 кандидатов: 40 canvas + 6 шейдеров + 4 CSS. Все в бюджете, smoke 50/50.
+- 50 candidates: 40 canvas + 6 shaders + 4 CSS. All within budget, smoke 50/50.
 
-## 2026-10-12 — Батч b03-wild разобран
+## 2026-10-12 — Batch b03-wild triaged
 
-- Принято 4: rain-fall, kaleido, static-noise, dna-helix. Отклонено 16.
+- Accepted 4: rain-fall, kaleido, static-noise, dna-helix. Rejected 16.
 
-## 2026-10-12 — Батч b02-waves разобран
+## 2026-10-12 — Batch b02-waves triaged
 
-- Принят dot-terrain. Отклонено 9.
+- Accepted dot-terrain. Rejected 9.
 
-## 2026-10-12 — Полное голосование main
+## 2026-10-12 — Full vote main
 
-- В паке закреплены bg-flow, ribbon, dots, topo. Отклонено 8 шейдер-кандидатов.
+- Pinned in pack bg-flow, ribbon, dots, topo. Rejected 8 shader candidates.
 
-## 2026-10-12 — Батч b01-spinners разобран
+## 2026-10-12 — Batch b01-spinners triaged
 
-- Принято 3 CSS-спиннера: spin-ring, spin-dots, spin-wave. Отклонено 7.
+- Accepted 3 CSS spinners: spin-ring, spin-dots, spin-wave. Rejected 7.

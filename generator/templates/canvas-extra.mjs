@@ -25,7 +25,7 @@ function footer(staticFrame = "draw(0,true)") {
   `function off(){run=false;cancelAnimationFrame(raf);raf=0;ro&&ro.disconnect();io.disconnect();removeEventListener("pointermove",ev);removeEventListener("scroll",fr);cv.remove()}`;
 }
 
-// 1. ribbon — Шёлк памяти
+// 1. ribbon — Silk of Memory
 export function buildRibbon({ seed = 1, palette }) {
   const consts = `function H(s){let h=1779033703^String(s).length;for(let i=0;i<String(s).length;i++){h=Math.imul(h^String(s).charCodeAt(i),3432918353);h=h<<13|h>>>19}return()=>{h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return(h^=h>>>16)>>>0}}` +
   `function RR(a){return()=>{a|=0;a=a+0x6d2b79f5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}` +
@@ -38,7 +38,7 @@ export function buildRibbon({ seed = 1, palette }) {
   return shell("gaRibbon", consts, body);
 }
 
-// 2. dotgrid — Дыхание толпы
+// 2. dotgrid — Breath of the Crowd
 export function buildDotGrid({ seed = 1, palette }) {
   const consts = `const COLS=${JSON.stringify(palette.strokes)},BG=${JSON.stringify(palette.bg)};`;
   const body = `const cols=o.colors??COLS,bgc=o.bg??BG;const R0=Math.random;` +
@@ -50,7 +50,7 @@ export function buildDotGrid({ seed = 1, palette }) {
   return shell("gaDots", consts, body);
 }
 
-// 3. topo — Карта тишины
+// 3. topo — Map of Silence
 export function buildTopo({ seed = 1, palette }) {
   const consts = `const COLS=${JSON.stringify(palette.strokes)},BG=${JSON.stringify(palette.bg)};`;
   const body = `const cols=o.colors??COLS,bgc=o.bg??BG;const R0=Math.random;` +

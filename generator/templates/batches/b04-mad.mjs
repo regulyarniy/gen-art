@@ -1,5 +1,5 @@
-// b04-mad — 17 эффектов промотированы в пак, остальные 33 отклонены и удалены.
-// Builder'ы остаются здесь как дом промотированных эффектов.
+// b04-mad — 17 effects promoted to pack, other 33 rejected and removed.
+// Builders stay here as the home of the promoted effects.
 import { shell, lifecycle, footer } from "../canvas-extra.mjs";
 import { shaderShell } from "../shader-extra.mjs";
 
@@ -7,7 +7,7 @@ const PAL = (palette) => `const COLS=${JSON.stringify(palette.strokes)},BG=${JSO
 const PRE = `const cols=o.colors??COLS,bgc=o.bg??BG;const R0=Math.random;`
   + `function bg(){cx.fillStyle=bgc;cx.fillRect(0,0,W||300,Hh||150)}` + lifecycle();
 
-// Чёрная дыра: аккреционный диск.
+// Black hole: accretion disk.
 export function buildBlackHole({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??130,P=[];for(let i=0;i<N;i++)P.push([Math.random()*6.283,.12+Math.random()*.34,.4+Math.random()*1.4]);`
@@ -15,7 +15,7 @@ export function buildBlackHole({ seed = 1, palette }) {
   return shell("gaBlackHole", PAL(palette), body);
 }
 
-// Дождь на стекле: расходящиеся круги.
+// Rain on glass: expanding rings.
 export function buildGlassRain({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??26,SZ=o.size??1,P=[];for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random(),r:0,mx:(8+Math.random()*22)*SZ});`
@@ -23,14 +23,14 @@ export function buildGlassRain({ seed = 1, palette }) {
   return shell("gaGlassRain", PAL(palette), body);
 }
 
-// Магнитное поле: опилки за мышью.
+// Magnetic field: filings follow the mouse.
 export function buildMagnetField({ seed = 1, palette }) {
   const body = PRE
     + `function draw(dt){const gx=o.step??22,gy=o.step??22,SP=o.speed??1,LN=o.len??6;T+=dt*.001*SP;cx.fillStyle=bgc;cx.fillRect(0,0,W,Hh);cx.lineWidth=2;for(let ix=0;ix<W/gx;ix++)for(let iy=0;iy<Hh/gy;iy++){const x=ix*gx+11,y=iy*gy+11,dx=x-mx*W,dy=y-my*Hh,d=Math.hypot(dx,dy)+9,a=Math.atan2(dy,dx)+Math.sin(T*2+d*.05)*.3;cx.strokeStyle=cols[(ix+iy)%cols.length];cx.beginPath();cx.moveTo(x-Math.cos(a)*LN,y-Math.sin(a)*LN);cx.lineTo(x+Math.cos(a)*LN,y+Math.sin(a)*LN);cx.stroke()}}` + footer();
   return shell("gaMagnetField", PAL(palette), body);
 }
 
-// Медузы: купола со щупальцами.
+// Jellyfish: domes with tentacles.
 export function buildJellyFloat({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??6,SZ=o.size??1,P=[];for(let i=0;i<N;i++)P.push({x:.1+Math.random()*.8,y:Math.random(),s:.4+Math.random()*.8,p:Math.random()*6.28});`
@@ -38,7 +38,7 @@ export function buildJellyFloat({ seed = 1, palette }) {
   return shell("gaJellyFloat", PAL(palette), body);
 }
 
-// Стая: мурмурация точек.
+// Flock: murmuration of dots.
 export function buildBoids({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??70,PL=o.pull??.03,P=[];for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random(),a:Math.random()*6.28});`
@@ -46,7 +46,7 @@ export function buildBoids({ seed = 1, palette }) {
   return shell("gaBoids", PAL(palette), body);
 }
 
-// Ночной город: мигающие окна.
+// Night city: blinking windows.
 export function buildCityNight({ seed = 1, palette }) {
   const body = PRE
     + `const P=[];for(let i=0;i<160;i++)P.push(Math.random());`
@@ -54,14 +54,14 @@ export function buildCityNight({ seed = 1, palette }) {
   return shell("gaCityNight", PAL(palette), body);
 }
 
-// Муаровые кольца: интерференция.
+// Moire rings: interference.
 export function buildMoireRings({ seed = 1, palette }) {
   const body = PRE
     + `function draw(dt){const X=W/2+(mx-.5)*20,Y=Hh/2+(my-.5)*20,ST=o.step??7,SP=o.speed??1,TW=o.twin??1;T+=dt*.001*SP*(1+sx);cx.fillStyle=bgc;cx.fillRect(0,0,W,Hh);cx.lineWidth=1;for(let r=4;r<Math.max(W,Hh);r+=ST){cx.strokeStyle=cols[((r/ST)|0)%cols.length];cx.globalAlpha=.55;cx.beginPath();cx.arc(X,Y,r+(T*8)%ST,0,6.283);cx.stroke();if(TW){cx.beginPath();cx.arc(W-X,Hh-Y,r,0,6.283);cx.stroke()}}cx.globalAlpha=1}` + footer();
   return shell("gaMoireRings", PAL(palette), body);
 }
 
-// Падающие блоки: тетрис-дождь.
+// Falling blocks: tetris rain.
 export function buildTetrisRain({ seed = 1, palette }) {
   const body = PRE
     + `const SH=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[1,0],[1,0],[1,1]],[[0,1],[1,1],[1,0]]];`
@@ -70,14 +70,14 @@ export function buildTetrisRain({ seed = 1, palette }) {
   return shell("gaTetrisRain", PAL(palette), body);
 }
 
-// Девятый вал: слоистые волны.
+// Ninth wave: layered swells.
 export function buildOceanLayers({ seed = 1, palette }) {
   const body = PRE
     + `function draw(dt){const N=o.count??5,SP=o.speed??1,A=o.amp??1;T+=dt*.001*SP*(1+sx);cx.fillStyle=bgc;cx.fillRect(0,0,W,Hh);for(let l=0;l<N;l++){cx.fillStyle=cols[l%cols.length];cx.globalAlpha=.35;cx.beginPath();const yb=Hh*(.3+l*.14);cx.moveTo(0,Hh);for(let x=0;x<=W;x+=6){cx.lineTo(x,yb+Math.sin(x*.02+T*(1+l*.3)+l*2)*(8+l*4)*A+Math.sin(x*.06-T*2)*4*A)}cx.lineTo(W,Hh);cx.closePath();cx.fill()}cx.globalAlpha=1}` + footer();
   return shell("gaOceanLayers", PAL(palette), body);
 }
 
-// Деление бактерий: клетки лопаются.
+// Dividing bacteria: bursting cells.
 export function buildBacteria({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??14,MR=o.maxr??16,P=[];for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random(),r:4+Math.random()*8,vx:(Math.random()-.5)*.001,vy:(Math.random()-.5)*.001});`
@@ -85,7 +85,7 @@ export function buildBacteria({ seed = 1, palette }) {
   return shell("gaBacteria", PAL(palette), body);
 }
 
-// Сонар: вращающийся луч.
+// Sonar: rotating beam.
 export function buildRadarSonar({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??12,TR=o.trail??.12,P=[];for(let i=0;i<N;i++)P.push([Math.random(),Math.random()*.42,Math.random()]);`
@@ -93,7 +93,7 @@ export function buildRadarSonar({ seed = 1, palette }) {
   return shell("gaRadarSonar", PAL(palette), body);
 }
 
-// Изометрия: прыгающие кубы.
+// Isometry: bouncing cubes.
 export function buildIsoCubes({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??22,SZ=o.size??1,P=[];for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random(),p:Math.random()*6.28,s:(8+Math.random()*10)*SZ});`
@@ -101,7 +101,7 @@ export function buildIsoCubes({ seed = 1, palette }) {
   return shell("gaIsoCubes", PAL(palette), body);
 }
 
-// Конфетти-шторм: бумажный вихрь.
+// Confetti storm: paper vortex.
 export function buildConfettiStorm({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??80,SZ=o.size??1,P=[];for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random(),a:Math.random()*6.28,s:.002+Math.random()*.004,r:(2+Math.random()*3)*SZ});`
@@ -109,7 +109,7 @@ export function buildConfettiStorm({ seed = 1, palette }) {
   return shell("gaConfettiStorm", PAL(palette), body);
 }
 
-// Глаза из темноты: веки.
+// Eyes in the dark: eyelids.
 export function buildSpiderEyes({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??14,SZ=o.size??1,F=o.follow??1,P=[];for(let i=0;i<N;i++)P.push({x:.06+Math.random()*.88,y:.12+Math.random()*.76,p:Math.random()*6.28,s:1+Math.random()*3,r:(5+Math.random()*7)*SZ});`
@@ -117,14 +117,14 @@ export function buildSpiderEyes({ seed = 1, palette }) {
   return shell("gaSpiderEyes", PAL(palette), body);
 }
 
-// Песочные часы: частицы сквозь горло.
+// Hourglass: particles through the throat.
 export function buildClockParticles({ seed = 1, palette }) {
   const body = PRE
     + `const N=o.count??70,SP=o.speed??1;function draw(dt){T+=dt*.001*SP;cx.fillStyle=bgc;cx.globalAlpha=.2;cx.fillRect(0,0,W,Hh);cx.globalAlpha=1;const X=W/2,Y=Hh/2,S=Math.min(W,Hh)*(o.scale??.42);cx.strokeStyle=cols[0];cx.lineWidth=1.6;cx.beginPath();cx.moveTo(X-S/2,Y-S/2);cx.lineTo(X+S/2,Y-S/2);cx.lineTo(X-S/2,Y+S/2);cx.lineTo(X+S/2,Y+S/2);cx.closePath();cx.stroke();cx.beginPath();cx.moveTo(X-S/2,Y-S/2);cx.lineTo(X+S/2,Y+S/2);cx.moveTo(X+S/2,Y-S/2);cx.lineTo(X-S/2,Y+S/2);cx.stroke();for(let i=0;i<N;i++){const p=(i*.61803+T*(.2+(i%4)*.12))%1,w2=(.5-Math.abs(p-.5))*S*.8;cx.fillStyle=cols[i%cols.length];cx.fillRect(X+Math.sin(i*7)*w2*.5+(mx-.5)*w2,Y-S/2+p*S,1.8,1.8)}}` + footer();
   return shell("gaClockParticles", PAL(palette), body);
 }
 
-// --- Шейдеры ---
+// --- Shaders ---
 
 export function buildPlasmaSea() {
   return shaderShell("gaPlasmaSea", `float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5);}`

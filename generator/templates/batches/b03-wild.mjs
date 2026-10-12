@@ -1,12 +1,12 @@
-// b03-wild — 4 эффекта промотированы в пак, остальные 16 отклонены и удалены.
-// Builder'ы остаются здесь как дом промотированных эффектов.
+// b03-wild — 4 effects promoted to pack, other 16 rejected and removed.
+// Builders stay here as the home of the promoted effects.
 import { shell, lifecycle, footer } from "../canvas-extra.mjs";
 
 const PAL = (palette) => `const COLS=${JSON.stringify(palette.strokes)},BG=${JSON.stringify(palette.bg)};`;
 const PRE = `const cols=o.colors??COLS,bgc=o.bg??BG;const R0=Math.random;`
   + `function bg(){cx.fillStyle=bgc;cx.fillRect(0,0,W||300,Hh||150)}` + lifecycle();
 
-// Падающие тире: матричный дождь без глифов.
+// Falling dashes: matrix rain without glyphs.
 export function buildRainFall({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,N=o.count??70,LN=o.len??1,P=[];for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random(),s:.3+Math.random()*.9,l:4+Math.random()*10});`
@@ -17,7 +17,7 @@ export function buildRainFall({ seed = 1, palette }) {
   return shell("gaRainFall", PAL(palette), body);
 }
 
-// Калейдоскоп: шесть лепестков из дрожащих линий.
+// Kaleidoscope: six petals of trembling lines.
 export function buildKaleido({ seed = 1, palette }) {
   const body = PRE
     + `const N=o.count??6,SP=o.speed??1,SZ=o.size??1;`
@@ -29,7 +29,7 @@ export function buildKaleido({ seed = 1, palette }) {
   return shell("gaKaleido", PAL(palette), body);
 }
 
-// Телеппомехи: 320 искр за кадр.
+// Static: 320 sparks per frame.
 export function buildStaticNoise({ seed = 1, palette }) {
   const body = PRE
     + `const N=o.count??320,TR=o.tear??.12,SZ=o.size??2;`
@@ -39,7 +39,7 @@ export function buildStaticNoise({ seed = 1, palette }) {
   return shell("gaStaticNoise", PAL(palette), body);
 }
 
-// Спираль жизни: двойная нить с перекладинами.
+// DNA helix: double strand with rungs.
 export function buildDnaHelix({ seed = 1, palette }) {
   const body = PRE
     + `const SP=o.speed??1,A=o.amp??1,ST=o.step??8;`

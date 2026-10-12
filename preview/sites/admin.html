@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Пульт — админка</title>
+<title>Console — admin</title>
 <style>
   body{margin:0;background:#04060b;color:#e5e7eb;font:14px/1.5 system-ui,sans-serif}
   .app{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
@@ -44,30 +44,30 @@
 </head>
 <body>
 <div class="app">
-  <div class="side"><b>◉ Пульт</b><a class="on" href="#">Обзор</a><a href="#">Серверы</a><a href="#">Биллинг</a><a href="#">Логи</a><a href="#">Настройки</a></div>
+  <div class="side"><b>◉ Console</b><a class="on" href="#">Overview</a><a href="#">Servers</a><a href="#">Billing</a><a href="#">Logs</a><a href="#">Settings</a></div>
   <div class="main">
-    <div class="top"><h1>Обзор</h1><span class="save"><span class="ga-sp-dots"><i></i><i></i><i></i></span>сохранение…</span></div>
+    <div class="top"><h1>Overview</h1><span class="save"><span class="ga-sp-dots"><i></i><i></i><i></i></span>saving…</span></div>
     <div class="kpi">
-      <div class="k"><div class="box" id="a-tasks"></div><div class="m"><b>1 284</b>задач в очереди</div></div>
-      <div class="k"><div class="box" id="a-cult"></div><div class="m"><b>×4.2</b>рост культур</div></div>
-      <div class="k"><div class="box" id="a-nodes"></div><div class="m"><b>22</b>ноды онлайн</div></div>
-      <div class="k"><div class="box" id="a-time"></div><div class="m"><b>07:12</b>до бэкапа</div></div>
+      <div class="k"><div class="box" id="a-tasks"></div><div class="m"><b>1,284</b>tasks queued</div></div>
+      <div class="k"><div class="box" id="a-cult"></div><div class="m"><b>×4.2</b>culture growth</div></div>
+      <div class="k"><div class="box" id="a-nodes"></div><div class="m"><b>22</b>nodes online</div></div>
+      <div class="k"><div class="box" id="a-time"></div><div class="m"><b>07:12</b>to backup</div></div>
     </div>
     <div class="grid2">
-      <div class="card"><h3>Нагрузка</h3><p>Девятый вал запросов за сутки</p><div class="box" id="a-load"></div></div>
-      <div class="card"><h3>Радар активности</h3><p>Луч идёт по кругу</p><div class="box sm" id="a-radar"></div></div>
+      <div class="card"><h3>Load</h3><p>Ninth wave of daily requests</p><div class="box" id="a-load"></div></div>
+      <div class="card"><h3>Activity radar</h3><p>The beam sweeps in circles</p><div class="box sm" id="a-radar"></div></div>
     </div>
     <div class="grid2">
-      <div class="card"><h3>Дата-центры</h3><p>Окна горят — все бодрствуют</p><div class="box sm" id="a-dc"></div></div>
-      <div class="card"><h3>Логи</h3><p>Небольшие помехи на линии</p><div class="box sm" id="a-logs"></div></div>
+      <div class="card"><h3>Datacenters</h3><p>Windows lit — everyone awake</p><div class="box sm" id="a-dc"></div></div>
+      <div class="card"><h3>Logs</h3><p>Slight line noise</p><div class="box sm" id="a-logs"></div></div>
     </div>
     <div class="row3">
-      <div class="card"><div class="dep"><span class="ga-sp-glitch"></span>деплой api-7…</div></div>
-      <div class="card"><div class="dep">Аптайм: 99.99% за 90 дней</div></div>
-      <div class="card"><div class="dep"><a class="back" href="./index.html">← все демо</a> · <a class="back" href="../index.html">витрина пака</a></div></div>
+      <div class="card"><div class="dep"><span class="ga-sp-glitch"></span>deploying api-7…</div></div>
+      <div class="card"><div class="dep">Uptime: 99.99% over 90 days</div></div>
+      <div class="card"><div class="dep"><a class="back" href="./index.html">← all demos</a> · <a class="back" href="../index.html">pack showcase</a></div></div>
     </div>
-    <div class="band"><div class="box" id="a-band"></div><div class="txt"><b>Живой трафик: каждая точка — запрос. Подведи курсор — стая потянется.</b></div></div>
-    <footer><span>Пульт v2.4</span><span>seed 7 · abyss</span></footer>
+    <div class="band"><div class="box" id="a-band"></div><div class="txt"><b>Live traffic: every dot is a request. Move the cursor — the flock follows.</b></div></div>
+    <footer><span>Console v2.4</span><span>seed 7 · abyss</span></footer>
   </div>
 </div>
 <script src="../../dist/ga-tetris-rain.js?v=2"></script>

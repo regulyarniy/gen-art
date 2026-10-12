@@ -1,26 +1,26 @@
 ---
 name: gen-art
-description: Генеративные motion-эффекты с нулевым рантаймом — новые батчи, опрос, разбор в пак. Используй когда просят сгенерить эффекты, показать опрос, разобрать батч или собрать selected-пак.
+description: Zero-runtime generative motion effects — new batches, curation, triage into the pack. Use when asked to generate effects, show the curation, triage a batch, or assemble the selected pack.
 ---
 
 # gen-art — zero-runtime generative art
 
-Проект: офлайн-генератор самодостаточных сниппетов `mount(el, opts) -> {destroy}`, ноль зависимостей в рантайме.
-Корень проекта — рабочая директория сессии (там `package.json` = `gen-art-zero`).
+Project: offline generator of self-contained snippets `mount(el, opts) -> {destroy}`, zero runtime dependencies.
+Project root is the session working directory (where `package.json` = `gen-art-zero`).
 
-## Модель данных (не ломать)
+## Data model (do not break)
 
-- `dist/` — ТОЛЬКО утверждённый пак. `dist/effects.json` — его каталог.
-- `staging/<batch>/` — кандидаты одного батча + `staging/<batch>/effects.json`. Удаляется после разбора.
-- `generator/lib/effects.mjs` — реестр. Поле `batch: "<id>"` = кандидат (едет в staging); без поля = пак (едет в dist).
-- `generator/templates/batches/<batch>.mjs` — builder-функции батча (по одному файлу на батч; общие хелперы импортируются из `canvas-extra.mjs` / `shader-extra.mjs` / `spinners-css.mjs`). Старые общие файлы шаблонов — legacy, новые эффекты только в batch-файлах.
-- `preview/curate.html?batch=<id>` — опрос ТОЛЬКО по кандидатам. `?batch=all` — полное голосование (пак + все батчи, голоса в `data/decisions-all.json`). Без параметра — новейший батч, `?batch=main` — галерея пака без кнопок (data-driven, читает `dist/effects.json`, обновляется сама).
-- `preview/index.html` — РУЧНАЯ витрина пака: захардкоженные карточки + `<script>` + вызовы `mount`. Сама не обновляется — обязана зеркалить `dist` после каждого разбора (см. Workflow B, шаг про витрину).
-- `preview/server.mjs` — статика + API: `GET /api/batches`, `GET /api/decisions?batch=`, `POST /api/decide {batch,id,ok}`, `POST /api/reset {batch}`. Голоса лежат в `data/decisions[-<batch>].json`.
-- `generator/make-selected.mjs [--from-decisions]` — `selected/` из `data/decisions.json` (main-пак) или `selected/manifest.json`.
-- Агент НИКОГДА не просит пользователя копировать manifest — читает `data/*.json` с диска.
+- `dist/` — ONLY the approved pack. `dist/effects.json` — its catalog.
+- `staging/<batch>/` — candidates of one batch + `staging/<batch>/effects.json`. Deleted after triage.
+- `generator/lib/effects.mjs` — registry. Field `batch: "<id>"` = candidate (goes to staging); no field = pack (goes to dist).
+- `generator/templates/batches/<batch>.mjs` — batch builder functions (one file per batch; shared helpers are imported from `canvas-extra.mjs` / `shader-extra.mjs` / `spinners-css.mjs`). Old shared template files are legacy, new effects only in batch files.
+- `preview/curate.html?batch=<id>` — vote on candidates ONLY. `?batch=all` — full curation (pack + all batches, votes in `data/decisions-all.json`). No parameter — newest batch, `?batch=main` — pack gallery without buttons (data-driven, reads `dist/effects.json`, updates itself).
+- `preview/index.html` — MANUAL pack showcase: hardcoded cards + `<script>` + `mount` calls. Does not update itself — must mirror `dist` after every triage (see Workflow B, showcase step).
+- `preview/server.mjs` — static + API: `GET /api/batches`, `GET /api/decisions?batch=`, `POST /api/decide {batch,id,ok}`, `POST /api/reset {batch}`. Votes live in `data/decisions[-<batch>].json`.
+- `generator/make-selected.mjs [--from-decisions]` — `selected/` from `data/decisions.json` (main pack) or `selected/manifest.json`.
+- Agent NEVER asks the user to copy the manifest — reads `data/*.json` from disk.
 
-Команды — pwsh-совместимые (`;` вместо `&&`). ID батча: `bNN-slug`, следующий свободный номер.
+Commands — pwsh-compatible (`;` instead of `&&`). Batch ID: `bNN-slug`, next free number.
 
 ```pwsh
 node generator/gen.mjs --type all --seed 7 --palette 0
@@ -29,36 +29,36 @@ node generator/smoke.mjs
 node preview/server.mjs
 ```
 
-## Workflow A — сгенерить N новых эффектов (в батч, не в пак)
+## Workflow A — generate N new effects (into a batch, not into the pack)
 
-1. Прочитай `references/authoring.md` (контракт сниппета, запреты, бюджеты).
-2. Создай `generator/templates/batches/<batch>.mjs` с builder-функциями (canvas — через `shell/lifecycle/footer`, шейдер — через `shaderShell`, CSS — чистая строка; см. authoring).
-3. Зарегистрируй записи в `generator/lib/effects.mjs` (в конец файла): id kebab-case, file `ga-<id>.(js|css)`, global `gaXxx` (для css — null + поле `demo` с HTML), kind (`canvas`/`shader`/`css`), budget (4096/5120/1024), `batch: "<batch>"`, title + meaning на русском.
-4. Прогони: `node generator/gen.mjs --type all --seed 7 --palette 0; node generator/check.mjs; node generator/smoke.mjs` — всё зелёное, без OVER. Кандидаты должны оказаться в `staging/<batch>/`, пак в `dist/` — без их файлов.
-5. Открой `http://localhost:5173/preview/curate.html?batch=<batch>`, скриншот, консоль без ошибок.
-6. Отправь пользователя голосовать. Решения сами упадут в `data/decisions-<batch>.json`.
+1. Read `references/authoring.md` (snippet contract, prohibitions, budgets).
+2. Create `generator/templates/batches/<batch>.mjs` with builder functions (canvas — via `shell/lifecycle/footer`, shader — via `shaderShell`, CSS — plain string; see authoring).
+3. Register entries in `generator/lib/effects.mjs` (at the end of the file): id kebab-case, file `ga-<id>.(js|css)`, global `gaXxx` (for css — null + `demo` field with HTML), kind (`canvas`/`shader`/`css`), budget (4096/5120/1024), `batch: "<batch>"`, title + meaning in English.
+4. Run: `node generator/gen.mjs --type all --seed 7 --palette 0; node generator/check.mjs; node generator/smoke.mjs` — all green, no OVER. Candidates must land in `staging/<batch>/`, pack in `dist/` — without their files.
+5. Open `http://localhost:5173/preview/curate.html?batch=<batch>`, screenshot, console without errors.
+6. Send the user to vote. Decisions land in `data/decisions-<batch>.json` by themselves.
 
-## Workflow B — разобрать батч (принятые в пак, отклонённые удалить вообще)
+## Workflow B — triage a batch (accepted into the pack, rejected deleted entirely)
 
-1. Прочитай `data/decisions-<batch>.json` (`votes: {id: {ok}}`). Если голосов нет — отправь пользователя на опрос, дождись.
-2. Принятые: убери поле `batch` из их записей реестра (builder остаётся в batch-файле — он теперь просто дом).
-3. Отклонённые: удали запись реестра + builder-функцию из batch-файла (+ импорт, если стал unused). Проверь грепом, что id/file/global нигде не остались.
-4. Если batch-файл опустел — удали файл. Удали `staging/<batch>/` и `data/decisions-<batch>.json`. Запиши итог в `data/batches.json` (`{batch, accepted:[], rejected:[], ts}`).
-5. Прогони gen + check + smoke. Проверь: `dist` содержит принятые, отклонённых нет нигде (греп), `staging/<batch>` нет.
-6. Обнови РУЧНУЮ витрину `preview/index.html` (иначе пак на главной устареет молча): заголовок-счётчик `пак (N)`; для каждого принятого — карточку (`div.box` с уникальным id + meta с title/file/meaning), `<script src="../dist/<file>?v=2">` и вызов `<global>.mount(...)`; карточки эффектов, которых больше нет в `dist`, — удалить. Проверь скриптом: все `dist/*.js` из витрины существуют, все `gaXxx.mount` совпадают с `global` из `dist/effects.json`.
-7. Доложи состав и вес. `selected/` НЕ трогать — это отдельный ручной пак (Workflow C).
+1. Read `data/decisions-<batch>.json` (`votes: {id: {ok}}`). If there are no votes — send the user to the curation, wait.
+2. Accepted: remove the `batch` field from their registry entries (builder stays in the batch file — it is simply home now).
+3. Rejected: delete the registry entry + builder function from the batch file (+ import if it became unused). Verify with grep that id/file/global are gone nowhere.
+4. If the batch file is empty — delete the file. Delete `staging/<batch>/` and `data/decisions-<batch>.json`. Write the result to `data/batches.json` (`{batch, accepted:[], rejected:[], ts}`).
+5. Run gen + check + smoke. Verify: `dist` contains the accepted ones, the rejected ones are nowhere (grep), `staging/<batch>` is gone.
+6. Update the MANUAL showcase `preview/index.html` (otherwise the pack on the front page silently goes stale): header counter `pack (N)`; for each accepted one — a card (`div.box` with unique id + meta with title/file/meaning), `<script src="../dist/<file>?v=2">` and a `<global>.mount(...)` call; cards of effects no longer in `dist` — delete. Verify with a script: all `dist/*.js` from the showcase exist, all `gaXxx.mount` match `global` from `dist/effects.json`.
+7. Report composition and weight. Do NOT touch `selected/` — it is a separate manual pack (Workflow C).
 
-## Workflow C — собрать selected-пак (только по просьбе)
+## Workflow C — assemble the selected pack (only on request)
 
-1. Прочитай `data/decisions.json` (main) или забери manifest у пользователя.
-2. `node generator/make-selected.mjs --from-decisions` (или без флага — из `selected/manifest.json`).
-3. Проверь `selected/demo.html` в браузере (скриншот + пустая консоль).
+1. Read `data/decisions.json` (main) or take the manifest from the user.
+2. `node generator/make-selected.mjs --from-decisions` (or without the flag — from `selected/manifest.json`).
+3. Check `selected/demo.html` in the browser (screenshot + empty console).
 
-## Жёсткие правила
+## Hard rules
 
-- Рантайм-сниппет: ноль импортов, ноль внешних ресурсов, `mount/destroy`, пауза вне вьюпорта, DPR cap 1.5, `prefers-reduced-motion` = 1 статичный кадр.
-- Не использовать `in window` — только `typeof X != "undefined"`.
-- Баланс скобок в shell-обёртках проверять `node --check` сразу (была бага с лишней `}`).
-- Превью грузят `dist`/`staging` с `?v=` чтобы не ловить кэш.
-- Сервер превью должен быть запущен СВЕЖИМ кодом — иначе `/api/*` нет и голоса останутся только в браузере.
-- Удаление эффекта = запись реестра + builder + импорт + dist/staging-файлы + греп-контроль. «Удалить вообще» значит вообще.
+- Runtime snippet: zero imports, zero external resources, `mount/destroy`, pause outside viewport, DPR cap 1.5, `prefers-reduced-motion` = 1 static frame.
+- Do not use `in window` — only `typeof X != "undefined"`.
+- Check paren balance in shell wrappers with `node --check` immediately (there was a bug with an extra `}`).
+- Previews load `dist`/`staging` with `?v=` to avoid catching cache.
+- Preview server must run FRESH code — otherwise `/api/*` is missing and votes stay in the browser only.
+- Deleting an effect = registry entry + builder + import + dist/staging files + grep check. "Delete entirely" means entirely.

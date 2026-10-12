@@ -72,7 +72,7 @@ const mounts = manifest.accepted
   })
   .filter(Boolean).join("\n");
 writeFileSync(join(selDir, "demo.html"), `<!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>selected demo</title>${hasCSS ? '\n<link rel="stylesheet" href="./ga-selected.css">' : ""}
 <style>
 body{margin:0;background:#05070c;color:#e5e7eb;font:14px/1.5 system-ui,sans-serif}
@@ -82,8 +82,8 @@ body{margin:0;background:#05070c;color:#e5e7eb;font:14px/1.5 system-ui,sans-seri
 .box{position:relative;min-height:240px}.box.center{display:flex;align-items:center;justify-content:center;min-height:180px}
 .meta{padding:8px 12px;border-top:1px solid #1f2937}
 .meta span{opacity:.5;font-size:12px;margin-left:8px;font-family:ui-monospace,monospace}
-</style></head><body><div class="wrap"><h1>Выбранное — ${manifest.accepted.length}</h1>
-<p>${hasJS ? `Один тег: <code>&lt;script src="ga-selected.js"&gt;&lt;/script&gt;</code>` : ""}${hasJS && hasCSS ? " + " : ""}${hasCSS ? `Один файл: <code>&lt;link href="ga-selected.css"&gt;</code>` : ""}</p>
+</style></head><body><div class="wrap"><h1>Selected — ${manifest.accepted.length}</h1>
+<p>${hasJS ? `One tag: <code>&lt;script src="ga-selected.js"&gt;&lt;/script&gt;</code>` : ""}${hasJS && hasCSS ? " + " : ""}${hasCSS ? `One file: <code>&lt;link href="ga-selected.css"&gt;</code>` : ""}</p>
 <div class="grid">\n${cards}\n</div></div>
 ${hasJS ? `<script src="./ga-selected.js"></script>\n<script>\n  const H = [];\n${mounts}\n  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));\n</script>` : ""}
 </body></html>\n`);
