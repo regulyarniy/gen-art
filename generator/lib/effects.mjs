@@ -44,7 +44,7 @@ const PARAMS = {
   "radar-sonar": [["speed", "range", .1, 3, .1, 1, "Скорость"], ["count", "int", 2, 40, 1, 12, "Метки"], ["trail", "range", .03, .4, .01, .12, "Шлейф"]],
   "iso-cubes": [["speed", "range", .1, 3, .1, 1, "Скорость"], ["count", "int", 5, 70, 1, 22, "Кубы"], ["size", "range", .4, 2.2, .1, 1, "Размер"]],
   "confetti-storm": [["speed", "range", .1, 3, .1, 1, "Скорость"], ["count", "int", 10, 300, 1, 80, "Бумажки"], ["size", "range", .4, 2.5, .1, 1, "Размер"]],
-  "spider-eyes": [["speed", "range", .1, 3, .1, 1, "Скорость"], ["count", "int", 2, 30, 1, 14, "Глаза"], ["follow", "toggle", 0, 1, 1, 1, "Взгляд"]],
+  "spider-eyes": [["speed", "range", .1, 3, .1, 1, "Скорость"], ["count", "int", 2, 30, 1, 14, "Глаза"], ["size", "range", .5, 3, .1, 1, "Размер"], ["follow", "toggle", 0, 1, 1, 1, "Взгляд"]],
   "clock-particles": [["speed", "range", .1, 3, .1, 1, "Скорость"], ["count", "int", 10, 250, 1, 70, "Песчинки"], ["scale", "range", .25, .6, .01, .42, "Часы"]],
   "plasma-sea": [["speed", "range", .1, 3, .1, 1, "Скорость"], ["zoom", "range", .4, 2.2, .1, 1, "Зум"], ["bright", "range", .4, 1.5, .05, 1, "Яркость"]],
   "spin-ring": [["size", "range", .4, 2.2, .1, 1, "Размер"], ["speed", "range", .25, 3, .05, 1, "Скорость"]],
