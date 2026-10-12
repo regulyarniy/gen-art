@@ -12,6 +12,7 @@
 - `preview/index.html` — РУЧНАЯ витрина пака (карточки + script + mount захардкожены). Обязана зеркалить `dist` после каждого разбора.
 - `preview/curate.html?batch=<id>` — голосование по кандидатам (`?batch=all` — полное, `?batch=main` — галерея пака).
 - `preview/server.mjs` — статика + API (`/api/batches`, `/api/decisions`, `/api/decide`, `/api/reset`). Перед опросом запускать СВЕЖИМ кодом.
+- `preview/sites/` — демо-страницы архетипов (лендинги, админка, …) + `index.html`-указатель. Только `dist/` с `?v=2`, `mount` с opts из ключей `PARAMS`, destroy на unload. Проверка: `node <tmp>/sites-check.mjs`.
 - `data/decisions[-<batch>].json` — голоса, `data/batches.json` — итоги разборов. `selected/` — отдельный ручной пак, при разборе не трогать.
 
 ## Контракт рантайм-сниппета

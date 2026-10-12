@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Монета — финтех</title>
+<style>
+  body{margin:0;background:#0e0a08;color:#f5ead6;font:15px/1.6 system-ui,sans-serif}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px 60px}
+  nav{display:flex;gap:22px;align-items:center;padding:18px 0;font-size:14px}
+  nav b{font-size:17px;color:#fbbf24} nav a{color:#d6c9a8;text-decoration:none}
+  nav .cta{margin-left:auto;background:#fbbf24;color:#1c1005;border-radius:10px;padding:8px 18px;font-weight:700}
+  .hero{position:relative;border-radius:18px;overflow:hidden;border:1px solid #3a2c14;min-height:420px;display:flex;align-items:center}
+  .hero .box{position:absolute;inset:0}
+  .hero .txt{position:relative;padding:48px;max-width:600px}
+  .hero h1{margin:0 0 10px;font-size:38px;line-height:1.1;color:#fde68a}
+  .hero p{opacity:.8;margin:0 0 22px}
+  .price{display:flex;gap:18px;align-items:baseline;margin:24px 0 6px}
+  .price b{font-size:34px;color:#fbbf24} .price span{color:#4ade80;font-size:14px}
+  .card{background:#140e07;border:1px solid #3a2c14;border-radius:14px;overflow:hidden;margin-top:16px}
+  .card h3{margin:0;padding:14px 18px 0;font-size:15px;color:#fde68a}
+  .card p{margin:2px 18px 10px;font-size:13px;opacity:.6}
+  .card .box{position:relative;height:230px}
+  .grid2{display:grid;gap:16px;grid-template-columns:1fr 1fr;margin-top:16px}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr}.hero h1{font-size:28px}}
+  .load{display:inline-flex;align-items:center;gap:10px;opacity:.7;font-size:13px;margin-top:16px}
+  footer{opacity:.5;font-size:13px;margin-top:30px;display:flex;justify-content:space-between}
+  .back{color:#a5b4fc;text-decoration:none}
+</style>
+<link rel="stylesheet" href="../../dist/ga-spin-wave.css?v=2">
+</head>
+<body>
+<div class="wrap">
+  <nav><b>◈ Монета</b><a href="#">Рынок</a><a href="#">Стейкинг</a><a href="#">Карта</a><a class="cta" href="#">Купить</a></nav>
+  <div class="hero"><div class="box" id="f-rain"></div>
+    <div class="txt"><h1>Деньги падают с неба. Успей подставить кошелёк</h1>
+    <p>Покупай, держи, получай. Монетный дождь идёт круглосуточно.</p></div>
+  </div>
+  <div class="price"><b>₽ 8 412.09</b><span>▲ +6.2% за сутки</span></div>
+  <div class="card"><h3>Рельеф рынка</h3><p>Высота — волатильность. Размер точки — объём.</p><div class="box" id="f-relief"></div></div>
+  <div class="grid2">
+    <div class="card"><h3>Сложный процент</h3><p>Клетки делятся. Капитал — тоже.</p><div class="box" id="f-compound"></div></div>
+    <div class="card"><h3>Рынок не спит</h3><p>Торги идут, пока ты спишь.</p><div class="box" id="f-night"></div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Время — деньги</h3><p>Каждая песчинка — секунда холда.</p><div class="box" id="f-time"></div></div>
+    <div class="card" style="display:flex;align-items:center;justify-content:center;min-height:120px"><div class="load"><span class="ga-sp-wave"><i></i><i></i><i></i><i></i><i></i></span>котировки обновляются…</div></div>
+  </div>
+  <footer><span>© 2026 Монета · не финсовет</span><a class="back" href="./index.html">← все демо</a></footer>
+</div>
+<script src="../../dist/ga-rain-fall.js?v=2"></script>
+<script src="../../dist/ga-dot-terrain.js?v=2"></script>
+<script src="../../dist/ga-bacteria.js?v=2"></script>
+<script src="../../dist/ga-city-night.js?v=2"></script>
+<script src="../../dist/ga-clock-particles.js?v=2"></script>
+<script>
+  const EMBER = ["#fbbf24", "#fb7185", "#f97316", "#fde68a"];
+  const H = [
+    gaRainFall.mount(document.getElementById('f-rain'), { count: 90, len: 1.6, speed: 1.2, colors: EMBER, bg: "#0e0a08" }),
+    gaDotTerrain.mount(document.getElementById('f-relief'), { den: 40, amp: 1.4, colors: EMBER }),
+    gaBacteria.mount(document.getElementById('f-compound'), { count: 20, colors: EMBER }),
+    gaCityNight.mount(document.getElementById('f-night'), { den: 14, colors: EMBER }),
+    gaClockParticles.mount(document.getElementById('f-time'), { count: 60, colors: EMBER }),
+  ];
+  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
+</script>
+</body>
+</html>

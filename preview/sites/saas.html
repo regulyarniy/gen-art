@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Орбита — аналитика для команд</title>
+<style>
+  body{margin:0;background:#05070c;color:#e5e7eb;font:15px/1.6 system-ui,sans-serif}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px 60px}
+  nav{display:flex;gap:22px;align-items:center;padding:18px 0;font-size:14px}
+  nav b{font-size:17px} nav a{color:#cbd5e1;text-decoration:none} nav a:hover{color:#fff}
+  nav .cta{margin-left:auto;background:#5eead4;color:#052e2b;border-radius:10px;padding:8px 18px;font-weight:700}
+  .hero{position:relative;border-radius:18px;overflow:hidden;border:1px solid #1f2937;min-height:440px;display:flex;align-items:center}
+  .hero .box{position:absolute;inset:0}
+  .hero .txt{position:relative;padding:48px;max-width:560px}
+  .hero h1{margin:0 0 10px;font-size:40px;line-height:1.1}
+  .hero p{opacity:.8;margin:0 0 22px}
+  .btns{display:flex;gap:12px}
+  .btn{background:#5eead4;color:#052e2b;border-radius:10px;padding:11px 24px;font-weight:700;text-decoration:none}
+  .btn.ghost{background:transparent;color:#e5e7eb;border:1px solid #374151}
+  .stats{display:flex;gap:26px;margin:26px 0;flex-wrap:wrap}
+  .stats div b{font-size:22px;display:block} .stats div span{opacity:.6;font-size:13px}
+  h2{font-size:22px;margin:34px 0 4px} .d{opacity:.65;margin:0 0 14px;font-size:14px}
+  .map{position:relative;border-radius:14px;overflow:hidden;border:1px solid #1f2937;min-height:260px}
+  .map .box{position:absolute;inset:0}
+  .map .tag{position:absolute;left:16px;bottom:12px;background:rgba(5,7,12,.7);border:1px solid #1f2937;border-radius:999px;padding:4px 14px;font-size:13px}
+  .feat{display:grid;gap:14px;grid-template-columns:1fr 1fr 1fr;margin-top:14px}
+  @media(max-width:700px){.feat{grid-template-columns:1fr}.hero h1{font-size:30px}}
+  .feat div{background:#0a0f1c;border:1px solid #1f2937;border-radius:12px;padding:16px;font-size:14px}
+  .feat b{display:block;margin-bottom:6px}
+  .ribbon{border-radius:12px;overflow:hidden;border:1px solid #1f2937;min-height:120px;position:relative;margin-top:26px}
+  .ribbon .box{position:absolute;inset:0}
+  footer{opacity:.5;font-size:13px;margin-top:34px;display:flex;justify-content:space-between}
+  .back{color:#a5b4fc;font-size:13px;text-decoration:none}
+  .load{display:inline-flex;align-items:center;gap:10px;opacity:.7;font-size:13px;margin-top:14px}
+</style>
+<link rel="stylesheet" href="../../dist/ga-spin-ring.css?v=2">
+</head>
+<body>
+<div class="wrap">
+  <nav><b>◉ Орбита</b><a href="#">Продукт</a><a href="#">Тарифы</a><a href="#">Блог</a><a class="cta" href="#">Попробовать</a></nav>
+  <div class="hero"><div class="box" id="s-hero"></div>
+    <div class="txt"><h1>Аналитика, которая засасывает</h1>
+    <p>Все метрики команды — в одной чёрной дыре. Ничего не теряется, всё светится.</p>
+    <div class="btns"><a class="btn" href="#">Начать бесплатно</a><a class="btn ghost" href="#">Демо</a></div></div>
+  </div>
+  <div class="stats"><div><b>12 408</b><span>команд онлайн</span></div><div><b>99.99%</b><span>аптайм</span></div><div><b>40 мс</b><span>медиана ответа</span></div></div>
+  <h2>Живая карта</h2><p class="d">Каждая точка — активный пользователь. Подведи курсор — толпа задышит чаще.</p>
+  <div class="map"><div class="box" id="s-map"></div><div class="tag">● 12 408 онлайн</div></div>
+  <div class="feat"><div><b>Воронки</b>От клика до оплаты — каждый шаг виден.</div><div><b>Алерты</b>Разбудим только по делу, честно.</div><div><b>SSO и аудит</b>Безопасность уровня «банк».</div></div>
+  <div class="ribbon"><div class="box" id="s-ribbon"></div></div>
+  <div class="load"><span class="ga-sp-ring"></span>карта обновляется каждые 5 секунд</div>
+  <footer><span>© 2026 Орбита</span><a class="back" href="./index.html">← все демо</a></footer>
+</div>
+<script src="../../dist/ga-black-hole.js?v=2"></script>
+<script src="../../dist/ga-dots.js?v=2"></script>
+<script src="../../dist/ga-ribbon.js?v=2"></script>
+<script>
+  const H = [
+    gaBlackHole.mount(document.getElementById('s-hero'), { count: 90, speed: 1.2 }),
+    gaDots.mount(document.getElementById('s-map'), { step: 26, size: 1.2 }),
+    gaRibbon.mount(document.getElementById('s-ribbon'), { count: 5, amp: 1.4 }),
+  ];
+  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
+</script>
+</body>
+</html>

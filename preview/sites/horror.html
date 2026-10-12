@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>НЕ МОРГАЙ — хоррор-квест</title>
+<style>
+  body{margin:0;background:#000;color:#e5e7eb;font:15px/1.6 system-ui,sans-serif}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px 60px}
+  .hero{position:relative;min-height:72vh;border-radius:0 0 18px 18px;overflow:hidden;border:1px solid #1f2937;border-top:none;display:flex;align-items:flex-end}
+  .hero .box{position:absolute;inset:0}
+  .hero .txt{position:relative;padding:40px 44px}
+  .kicker{color:#f87171;letter-spacing:.3em;font-size:12px}
+  .hero h1{margin:6px 0 8px;font-size:52px;line-height:1}
+  .hero p{opacity:.75;max-width:520px;margin:0}
+  .sec{margin-top:30px;background:#070707;border:1px solid #1f2937;border-radius:14px;overflow:hidden}
+  .sec .box{position:relative;height:240px}
+  .sec .t{padding:14px 18px}
+  .sec h2{margin:0 0 4px;font-size:19px}
+  .sec p{margin:0;opacity:.65;font-size:14px}
+  .grid2{display:grid;gap:0;grid-template-columns:1fr 1fr}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr}.hero h1{font-size:36px}}
+  .grid2 .sec{margin-top:0;border-radius:0}
+  .tickets{display:flex;gap:14px;align-items:center;margin-top:26px;background:#160607;border:1px solid #7f1d1d;border-radius:14px;padding:20px 22px;flex-wrap:wrap}
+  .tickets b{font-size:18px}
+  .tickets a{background:#b91c1c;color:#fff;border-radius:10px;padding:10px 26px;font-weight:700;text-decoration:none}
+  footer{opacity:.4;font-size:12px;margin-top:26px;display:flex;justify-content:space-between}
+  .back{color:#a5b4fc;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero"><div class="box" id="h-eyes"></div>
+    <div class="txt"><div class="kicker">Хоррор-квест · 18+</div>
+    <h1>НЕ МОРГАЙ</h1>
+    <p>Четырнадцать пар глаз следят за каждым твоим движением. Дойдёшь до выхода — расскажешь.</p></div>
+  </div>
+  <div class="grid2">
+    <div class="sec"><div class="box" id="h-bats"></div><div class="t"><h2>Подвал</h2><p>Стая снялась с потолка и тянется к теплу твоего курсора.</p></div></div>
+    <div class="sec"><div class="box" id="h-ouija"></div><div class="t"><h2>Спиритический компас</h2><p>Железные стрелки сами выстраиваются вокруг тебя. Не убирай руку.</p></div></div>
+  </div>
+  <div class="tickets"><b>Сеансы: 23:00 · 00:30 · 02:00</b><span style="opacity:.6">осталось 3 места на полночь</span><a href="#">Купить билет</a></div>
+  <footer><span>© 2026 Подвал на Сретенке</span><a class="back" href="./index.html">← все демо</a></footer>
+</div>
+<script src="../../dist/ga-spider-eyes.js?v=2"></script>
+<script src="../../dist/ga-boids.js?v=2"></script>
+<script src="../../dist/ga-magnet-field.js?v=2"></script>
+<script>
+  const H = [
+    gaSpiderEyes.mount(document.getElementById('h-eyes'), { count: 22, speed: .7 }),
+    gaBoids.mount(document.getElementById('h-bats'), { count: 120, pull: .05, speed: 1.4 }),
+    gaMagnetField.mount(document.getElementById('h-ouija'), { step: 26, len: 8 }),
+  ];
+  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
+</script>
+</body>
+</html>

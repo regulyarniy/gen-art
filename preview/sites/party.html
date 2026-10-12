@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Конфетти — детские праздники</title>
+<style>
+  body{margin:0;background:#fff7ed;color:#431407;font:15px/1.6 system-ui,sans-serif}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px 60px}
+  nav{display:flex;gap:22px;align-items:center;padding:18px 0;font-size:14px}
+  nav b{font-size:17px} nav a{color:#9a3412;text-decoration:none}
+  nav .cta{margin-left:auto;background:#f97316;color:#fff;border-radius:999px;padding:8px 20px;font-weight:700}
+  .hero{position:relative;border-radius:22px;overflow:hidden;border:2px solid #fed7aa;min-height:420px;display:flex;align-items:center}
+  .hero .box{position:absolute;inset:0}
+  .hero .txt{position:relative;padding:48px;max-width:600px}
+  .hero h1{margin:0 0 10px;font-size:40px;line-height:1.1}
+  .hero p{opacity:.75;margin:0 0 22px}
+  .btn{background:#f97316;color:#fff;border-radius:999px;padding:12px 30px;font-weight:700;text-decoration:none}
+  h2{font-size:22px;margin:30px 0 4px} .d{opacity:.6;margin:0 0 12px;font-size:14px}
+  .card{background:#fff;border:2px solid #fed7aa;border-radius:18px;overflow:hidden;margin-top:14px}
+  .card h3{margin:0;padding:14px 18px 0;font-size:15px}
+  .card p{margin:2px 18px 10px;font-size:13px;opacity:.6}
+  .card .box{position:relative;height:210px}
+  .grid2{display:grid;gap:14px;grid-template-columns:1fr 1fr;margin-top:14px}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr}.hero h1{font-size:30px}}
+  .load{display:inline-flex;align-items:center;gap:10px;font-size:13px;padding:18px;opacity:.7}
+  footer{opacity:.6;font-size:13px;margin-top:28px;display:flex;justify-content:space-between}
+  .back{color:#7c3aed;text-decoration:none}
+</style>
+<link rel="stylesheet" href="../../dist/ga-spin-ring.css?v=2">
+</head>
+<body>
+<div class="wrap">
+  <nav><b>✿ Конфетти</b><a href="#">Программы</a><a href="#">Аниматоры</a><a href="#">Отзывы</a><a class="cta" href="#">Заказать</a></nav>
+  <div class="hero"><div class="box" id="p-hero"></div>
+    <div class="txt"><h1>Праздник, который видно из космоса</h1>
+    <p>Тот же генеративный пак — на светлом фоне. Ни одного тёмного пикселя.</p>
+    <a class="btn" href="#">Выбрать программу</a></div>
+  </div>
+  <h2>Игровая комната</h2><p class="d">Падающие фигурки и конструктор, который прыгает сам.</p>
+  <div class="grid2">
+    <div class="card"><h3>Тетрис</h3><p>Складывать некому — и ладно.</p><div class="box" id="p-tetris"></div></div>
+    <div class="card"><h3>Конструктор</h3><p>Кубы на батуте.</p><div class="box" id="p-iso"></div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Аквагрим</h3><p>Медузы вместо масок.</p><div class="box" id="p-jelly"></div></div>
+    <div class="card"><h3>Диско-шар</h3><p>Калейдоскоп под потолком.</p><div class="box" id="p-disco"></div></div>
+  </div>
+  <div class="card"><div class="load"><span class="ga-sp-ring"></span>надуваем шарики…</div></div>
+  <footer><span>© 2026 Конфетти</span><a class="back" href="./index.html">← все демо</a></footer>
+</div>
+<script src="../../dist/ga-confetti-storm.js?v=2"></script>
+<script src="../../dist/ga-tetris-rain.js?v=2"></script>
+<script src="../../dist/ga-iso-cubes.js?v=2"></script>
+<script src="../../dist/ga-jelly-float.js?v=2"></script>
+<script src="../../dist/ga-kaleido.js?v=2"></script>
+<script>
+  const FUN = ["#f97316", "#ec4899", "#8b5cf6", "#22c55e"];
+  const BG = "#fff7ed";
+  const H = [
+    gaConfettiStorm.mount(document.getElementById('p-hero'), { count: 160, bg: BG, colors: FUN }),
+    gaTetrisRain.mount(document.getElementById('p-tetris'), { count: 10, bg: BG, colors: FUN }),
+    gaIsoCubes.mount(document.getElementById('p-iso'), { count: 26, bg: BG, colors: FUN }),
+    gaJellyFloat.mount(document.getElementById('p-jelly'), { count: 7, bg: BG, colors: FUN }),
+    gaKaleido.mount(document.getElementById('p-disco'), { count: 9, speed: 1.4, bg: BG, colors: FUN }),
+  ];
+  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
+</script>
+</body>
+</html>

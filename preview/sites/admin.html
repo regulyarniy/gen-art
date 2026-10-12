@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Пульт — админка</title>
+<style>
+  body{margin:0;background:#04060b;color:#e5e7eb;font:14px/1.5 system-ui,sans-serif}
+  .app{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
+  @media(max-width:800px){.app{grid-template-columns:1fr}.side{display:none}}
+  .side{background:#070b14;border-right:1px solid #1f2937;padding:20px 14px}
+  .side b{display:block;margin:0 0 14px;font-size:16px}
+  .side a{display:block;color:#94a3b8;text-decoration:none;padding:7px 10px;border-radius:8px}
+  .side a.on{background:#111827;color:#fff}
+  .main{padding:20px 24px 50px;max-width:1100px}
+  .top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .top h1{margin:0;font-size:20px;flex:1}
+  .save{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;opacity:.7}
+  .kpi{display:grid;gap:12px;grid-template-columns:repeat(4,1fr)}
+  @media(max-width:800px){.kpi{grid-template-columns:1fr 1fr}}
+  .k{background:#0a0f1c;border:1px solid #1f2937;border-radius:12px;overflow:hidden}
+  .k .box{position:relative;height:110px}
+  .k .m{padding:8px 12px 10px;font-size:12px}
+  .k .m b{font-size:16px;display:block}
+  .grid2{display:grid;gap:12px;grid-template-columns:2fr 1fr;margin-top:12px}
+  @media(max-width:800px){.grid2{grid-template-columns:1fr}}
+  .card{background:#0a0f1c;border:1px solid #1f2937;border-radius:12px;overflow:hidden}
+  .card h3{margin:0;padding:12px 14px 0;font-size:14px}
+  .card p{margin:2px 14px 10px;font-size:12px;opacity:.6}
+  .card .box{position:relative;height:240px}
+  .card .box.sm{height:170px}
+  .row3{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr;margin-top:12px}
+  @media(max-width:800px){.row3{grid-template-columns:1fr}}
+  .dep{display:flex;align-items:center;gap:10px;padding:14px;font-size:13px}
+  .back{color:#a5b4fc;font-size:13px;text-decoration:none}
+  footer{margin-top:18px;display:flex;justify-content:space-between;opacity:.5;font-size:12px}
+</style>
+<link rel="stylesheet" href="../../dist/ga-spin-glitch.css?v=2">
+<link rel="stylesheet" href="../../dist/ga-spin-dots.css?v=2">
+</head>
+<body>
+<div class="app">
+  <div class="side"><b>◉ Пульт</b><a class="on" href="#">Обзор</a><a href="#">Серверы</a><a href="#">Биллинг</a><a href="#">Логи</a><a href="#">Настройки</a></div>
+  <div class="main">
+    <div class="top"><h1>Обзор</h1><span class="save"><span class="ga-sp-dots"><i></i><i></i><i></i></span>сохранение…</span></div>
+    <div class="kpi">
+      <div class="k"><div class="box" id="a-tasks"></div><div class="m"><b>1 284</b>задач в очереди</div></div>
+      <div class="k"><div class="box" id="a-cult"></div><div class="m"><b>×4.2</b>рост культур</div></div>
+      <div class="k"><div class="box" id="a-nodes"></div><div class="m"><b>22</b>ноды онлайн</div></div>
+      <div class="k"><div class="box" id="a-time"></div><div class="m"><b>07:12</b>до бэкапа</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>Нагрузка</h3><p>Девятый вал запросов за сутки</p><div class="box" id="a-load"></div></div>
+      <div class="card"><h3>Радар активности</h3><p>Луч идёт по кругу</p><div class="box sm" id="a-radar"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>Дата-центры</h3><p>Окна горят — все бодрствуют</p><div class="box sm" id="a-dc"></div></div>
+      <div class="card"><h3>Логи</h3><p>Небольшие помехи на линии</p><div class="box sm" id="a-logs"></div></div>
+    </div>
+    <div class="row3">
+      <div class="card"><div class="dep"><span class="ga-sp-glitch"></span>деплой api-7…</div></div>
+      <div class="card"><div class="dep">Аптайм: 99.99% за 90 дней</div></div>
+      <div class="card"><div class="dep"><a class="back" href="./index.html">← все демо</a></div></div>
+    </div>
+    <footer><span>Пульт v2.4</span><span>seed 7 · abyss</span></footer>
+  </div>
+</div>
+<script src="../../dist/ga-tetris-rain.js?v=2"></script>
+<script src="../../dist/ga-bacteria.js?v=2"></script>
+<script src="../../dist/ga-iso-cubes.js?v=2"></script>
+<script src="../../dist/ga-clock-particles.js?v=2"></script>
+<script src="../../dist/ga-ocean-layers.js?v=2"></script>
+<script src="../../dist/ga-radar-sonar.js?v=2"></script>
+<script src="../../dist/ga-city-night.js?v=2"></script>
+<script src="../../dist/ga-static-noise.js?v=2"></script>
+<script>
+  const H = [
+    gaTetrisRain.mount(document.getElementById('a-tasks'), { count: 6, speed: 1.4 }),
+    gaBacteria.mount(document.getElementById('a-cult'), { count: 8, maxr: 10 }),
+    gaIsoCubes.mount(document.getElementById('a-nodes'), { count: 10, speed: 1.2 }),
+    gaClockParticles.mount(document.getElementById('a-time'), { count: 30 }),
+    gaOceanLayers.mount(document.getElementById('a-load'), { count: 4, amp: 1.3 }),
+    gaRadarSonar.mount(document.getElementById('a-radar'), { count: 8 }),
+    gaCityNight.mount(document.getElementById('a-dc'), { den: 12 }),
+    gaStaticNoise.mount(document.getElementById('a-logs'), { count: 120, size: 1 }),
+  ];
+  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
+</script>
+</body>
+</html>

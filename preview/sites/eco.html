@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Глубоководье — эко-проект</title>
+<style>
+  body{margin:0;background:#060d0b;color:#e7f0e9;font:15px/1.6 system-ui,sans-serif}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px 60px}
+  nav{display:flex;gap:22px;align-items:center;padding:18px 0;font-size:14px}
+  nav b{font-size:17px;color:#a3e635} nav a{color:#b9cdc0;text-decoration:none}
+  nav .cta{margin-left:auto;border:1px solid #4d7c0f;color:#d9f99d;border-radius:10px;padding:8px 18px;text-decoration:none}
+  .hero{position:relative;border-radius:18px;overflow:hidden;border:1px solid #1c2f26;min-height:420px;display:flex;align-items:flex-end}
+  .hero .box{position:absolute;inset:0}
+  .hero .txt{position:relative;padding:44px}
+  .hero h1{margin:0 0 8px;font-size:38px}
+  .hero p{opacity:.8;margin:0;max-width:560px}
+  h2{font-size:22px;margin:32px 0 4px} .d{opacity:.6;margin:0 0 12px;font-size:14px}
+  .card{background:#08120e;border:1px solid #1c2f26;border-radius:14px;overflow:hidden;margin-top:14px}
+  .card h3{margin:0;padding:14px 18px 0;font-size:15px}
+  .card p{margin:2px 18px 10px;font-size:13px;opacity:.6}
+  .card .box{position:relative;height:230px}
+  .grid2{display:grid;gap:14px;grid-template-columns:1fr 1fr;margin-top:14px}
+  @media(max-width:700px){.grid2{grid-template-columns:1fr}.hero h1{font-size:28px}}
+  .join{margin-top:26px;background:#0c1a12;border:1px solid #4d7c0f;border-radius:14px;padding:22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .join b{font-size:18px} .join a{background:#65a30d;color:#07130c;border-radius:10px;padding:10px 26px;font-weight:700;text-decoration:none}
+  footer{opacity:.5;font-size:13px;margin-top:28px;display:flex;justify-content:space-between}
+  .back{color:#a5b4fc;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><b>❧ Глубоководье</b><a href="#">Луг</a><a href="#">Море</a><a href="#">Заповедник</a><a class="cta" href="#">Стать волонтёром</a></nav>
+  <div class="hero"><div class="box" id="e-meadow"></div>
+    <div class="txt"><h1>Ветер над лугом</h1><p>Невидимые потоки несут семена. Мы сажаем леса там, где они падают.</p></div>
+  </div>
+  <h2>Море</h2><p class="d">Медузы дрейфуют вверх. Не трогай — просто смотри.</p>
+  <div class="card"><div class="box" id="e-jelly" style="height:260px"></div></div>
+  <div class="grid2">
+    <div class="card"><h3>Птицы</h3><p>Стая тянется к теплу.</p><div class="box" id="e-birds" style="height:200px"></div></div>
+    <div class="card"><h3>Дождь</h3><p>Капли на стекле станции.</p><div class="box" id="e-rain" style="height:200px"></div></div>
+  </div>
+  <h2>Жизнь и карта</h2><p class="d">Двойная спираль и рельеф заповедника.</p>
+  <div class="grid2">
+    <div class="card"><h3>Спираль жизни</h3><p>Всё связано.</p><div class="box" id="e-dna" style="height:200px"></div></div>
+    <div class="card"><h3>Карта тишины</h3><p>Изолинии мест, где тихо.</p><div class="box" id="e-topo" style="height:200px"></div></div>
+  </div>
+  <div class="card"><h3>Река</h3><p>Шёлковые ленты воды.</p><div class="box" id="e-river" style="height:150px"></div></div>
+  <div class="join"><b>Посади дерево — получи координаты</b><a href="#">Участвовать</a></div>
+  <footer><span>© 2026 Глубоководье</span><a class="back" href="./index.html">← все демо</a></footer>
+</div>
+<script src="../../dist/ga-bg-flow.js?v=2"></script>
+<script src="../../dist/ga-jelly-float.js?v=2"></script>
+<script src="../../dist/ga-boids.js?v=2"></script>
+<script src="../../dist/ga-glass-rain.js?v=2"></script>
+<script src="../../dist/ga-dna-helix.js?v=2"></script>
+<script src="../../dist/ga-topo.js?v=2"></script>
+<script src="../../dist/ga-ribbon.js?v=2"></script>
+<script>
+  const MOSS = ["#a3e635", "#34d399", "#22d3ee", "#e7e5e4"];
+  const H = [
+    gaBgFlow.mount(document.getElementById('e-meadow'), { count: 700, speed: .8, trail: .12, colors: MOSS, bg: "#060d0b" }),
+    gaJellyFloat.mount(document.getElementById('e-jelly'), { count: 8, size: 1.2, colors: MOSS }),
+    gaBoids.mount(document.getElementById('e-birds'), { count: 90, colors: MOSS }),
+    gaGlassRain.mount(document.getElementById('e-rain'), { count: 30, colors: MOSS }),
+    gaDnaHelix.mount(document.getElementById('e-dna'), { colors: MOSS }),
+    gaTopo.mount(document.getElementById('e-topo'), { colors: MOSS }),
+    gaRibbon.mount(document.getElementById('e-river'), { count: 4, amp: 1.6, speed: .7, colors: MOSS }),
+  ];
+  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
+</script>
+</body>
+</html>
