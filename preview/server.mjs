@@ -91,6 +91,7 @@ createServer(async (req, res) => {
     return;
   }
   let path = url.pathname === "/" ? "/preview/index.html" : url.pathname;
+  if (path === "/index.html") path = "/preview/index.html";
   if (path === "/sites" || path.startsWith("/sites/")) path = "/preview" + path;
   const safe = normalize(path).replace(/^(\.\.[/\\])+/, "");
   try {
