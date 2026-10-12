@@ -18,7 +18,7 @@
 ## Контракт рантайм-сниппета
 
 - `globalThis.gaXxx = { mount }`, ноль импортов и внешних ресурсов.
-- Внутри `mount`: canvas `position:absolute;inset:0`, `ResizeObserver` (guard `typeof`), `IntersectionObserver` (пауза вне вьюпорта), DPR cap 1.5, `pointermove` (passive) + скролл через `fr()`, `prefers-reduced-motion` = 1 статичный кадр (обязательно после `rs()`), `destroy()` чистит всё + `loseContext` для WebGL.
+- Внутри `mount`: canvas `position:absolute;inset:0`, позиционирование `el` — только если computed `static` (классовые absolute/fixed/sticky не затирать инлайном!), `ResizeObserver` (guard `typeof`), `IntersectionObserver` (пауза вне вьюпорта), DPR cap 1.5, `pointermove` (passive) + скролл через `fr()`, `prefers-reduced-motion` = 1 статичный кадр (обязательно после `rs()`), `destroy()` чистит всё + `loseContext` для WebGL.
 - Canvas: хелперы `shell/lifecycle/footer` из `canvas-extra.mjs`; `draw(dt)` существует, время только через `T`; после `footer()` ничего не дописывать. Без `//`-комментариев, без `in window` (только `typeof`), `return` и `{` на одной строке (минификатор).
 - Шейдер: `shaderShell`, GLSL ES 3.00, uniform `t,m,s,r` (+`z,b` для зума/яркости), выход `o`, яркость в узде (`min`, затухание к краям).
 - Бюджеты (после минификации): canvas ≤ 4096 Б, шейдер ≤ 5120 Б, CSS ≤ 1024 Б. Скобки в shell-обёртках проверять `node --check`.

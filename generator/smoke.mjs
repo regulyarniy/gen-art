@@ -17,6 +17,7 @@ globalThis.innerHeight = 800;
 globalThis.requestAnimationFrame = () => 0;
 globalThis.cancelAnimationFrame = () => {};
 globalThis.matchMedia = () => ({ matches: false });
+globalThis.getComputedStyle = () => ({ position: "static" });
 globalThis.ResizeObserver = class { observe() {} disconnect() {} };
 globalThis.IntersectionObserver = class { constructor(cb) { this.cb = cb; } observe() { this.cb([{ isIntersecting: false }]); } disconnect() {} };
 

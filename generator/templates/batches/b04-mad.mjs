@@ -65,8 +65,8 @@ export function buildMoireRings({ seed = 1, palette }) {
 export function buildTetrisRain({ seed = 1, palette }) {
   const body = PRE
     + `const SH=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[1,0],[1,0],[1,1]],[[0,1],[1,1],[1,0]]];`
-    + `const SP=o.speed??1,N=o.count??8,SZ=o.size??1,P=[];for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random()*-1,s:(6+Math.random()*6)*SZ,c:(Math.random()*5)|0,v:.001+Math.random()*.002});`
-    + `function draw(dt){T+=dt*.001*SP;cx.fillStyle=bgc;cx.globalAlpha=.25;cx.fillRect(0,0,W,Hh);cx.globalAlpha=1;for(let i=0;i<P.length;i++){const p=P[i];p.y+=p.v*dt*.05*SP;const sh=SH[p.c%SH.length];for(let a=0;a<sh.length;a++)for(let b=0;b<sh[a].length;b++)if(sh[a][b]){cx.fillStyle=cols[(p.c+a+b)%cols.length];cx.fillRect((p.x*W+b*p.s+W)%W,(p.y*Hh+a*p.s)%(Hh+40)-20,p.s-1,p.s-1)}if(p.y>1.2){p.y=-.1;p.x=Math.random()}}}` + footer();
+    + `const SP=o.speed??1,N=o.count??8,SZ=o.size??1,P=[];for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random()*1.1-.1,s:(6+Math.random()*6)*SZ,c:(Math.random()*5)|0,v:.001+Math.random()*.002});`
+    + `function draw(dt){T+=dt*.001*SP;cx.fillStyle=bgc;cx.globalAlpha=.25;cx.fillRect(0,0,W,Hh);cx.globalAlpha=1;for(let i=0;i<P.length;i++){const p=P[i];p.y+=p.v*dt*.08*SP;const sh=SH[p.c%SH.length];for(let a=0;a<sh.length;a++)for(let b=0;b<sh[a].length;b++)if(sh[a][b]){cx.fillStyle=cols[(p.c+a+b)%cols.length];cx.fillRect((p.x*W+b*p.s+W)%W,(p.y*Hh+a*p.s)%(Hh+40)-20,p.s-1,p.s-1)}if(p.y>1.2){p.y=-.1;p.x=Math.random()}}}` + footer();
   return shell("gaTetrisRain", PAL(palette), body);
 }
 

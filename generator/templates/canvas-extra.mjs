@@ -8,7 +8,7 @@ function shell(global, consts, body) {
 export { shell, lifecycle, footer };
 
 function lifecycle(hasScroll = true) {
-  return `const cv=document.createElement("canvas");cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;display:block";el.style.position=el.style.position||"relative";el.appendChild(cv);` +
+  return `const cv=document.createElement("canvas");cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;display:block";if(getComputedStyle(el).position=="static")el.style.position="relative";el.appendChild(cv);` +
   `const cx=cv.getContext("2d");let W=0,Hh=0,raf=0,run=true,vis=true,mx=.5,my=.5,sx=0;` +
   `function rs(){const r=el.getBoundingClientRect();const d=Math.min(devicePixelRatio||1,1.5);W=Math.max(2,r.width|0);Hh=Math.max(2,r.height|0);cv.width=W*d;cv.height=Hh*d;cx.setTransform(d,0,0,d,0,0);bg();}` +
   `const ro=(typeof ResizeObserver!="undefined")?new ResizeObserver(rs):null;` +

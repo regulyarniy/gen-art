@@ -8,7 +8,7 @@ export function buildBgFlow({ seed = 1, palette, count = 600, speed = 1 } = {}) 
   const src = `globalThis.gaBgFlow=(()=>{function H(s){let h=1779033703^String(s).length;for(let i=0;i<String(s).length;i++){h=Math.imul(h^String(s).charCodeAt(i),3432918353);h=h<<13|h>>>19}return()=>{h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return(h^=h>>>16)>>>0}}function R(a){return()=>{a|=0;a=a+0x6d2b79f5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const STROKES=${strokes},BG=${bg},SEED=${JSON.stringify(String(seed))},N=${count},SPD=${speed};
 function mount(el,o={}){const seed=o.seed??SEED,n=o.count??N,spd=o.speed??SPD,cols=o.colors??STROKES,bgc=o.bg??BG,TR=o.trail??.08,LN=o.len??8;
-const cv=document.createElement("canvas");cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;display:block";el.style.position=el.style.position||"relative";el.appendChild(cv);
+const cv=document.createElement("canvas");cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;display:block";if(getComputedStyle(el).position=="static")el.style.position="relative";el.appendChild(cv);
 const cx=cv.getContext("2d");let W=0,Hh=0,dpr=1,raf=0,run=true,vis=true,t=H(seed)(),mx=.5,my=.5,sx=0;
 const rnd=R(t);let T=rnd()*100,L=0;const P=[];for(let i=0;i<n;i++)P.push({x:rnd(),y:rnd(),p:rnd(),s:.4+rnd()*.9});
 function rs(){const r=el.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,1.5);W=Math.max(2,r.width|0);Hh=Math.max(2,r.height|0);cv.width=W*dpr;cv.height=Hh*dpr;cx.setTransform(dpr,0,0,dpr,0,0);cx.fillStyle=bgc;cx.fillRect(0,0,W,Hh)}

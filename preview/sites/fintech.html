@@ -24,6 +24,11 @@
   .grid2{display:grid;gap:16px;grid-template-columns:1fr 1fr;margin-top:16px}
   @media(max-width:700px){.grid2{grid-template-columns:1fr}.hero h1{font-size:28px}}
   .load{display:inline-flex;align-items:center;gap:10px;opacity:.7;font-size:13px;margin-top:16px}
+  .band{position:relative;overflow:hidden;border-radius:14px;border:1px solid #3a2c14;min-height:180px;display:flex;align-items:center;margin-top:16px}
+  .band .box{position:absolute;inset:0}
+  .band .txt{position:relative;padding:24px 28px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;width:100%;box-sizing:border-box}
+  .band .txt b{font-size:19px;flex:1;min-width:220px;color:#fde68a}
+  .band .txt a{background:#fbbf24;color:#1c1005;border-radius:10px;padding:10px 26px;font-weight:700;text-decoration:none}
   footer{opacity:.5;font-size:13px;margin-top:30px;display:flex;justify-content:space-between}
   .back{color:#a5b4fc;text-decoration:none}
 </style>
@@ -46,6 +51,7 @@
     <div class="card"><h3>Время — деньги</h3><p>Каждая песчинка — секунда холда.</p><div class="box" id="f-time"></div></div>
     <div class="card" style="display:flex;align-items:center;justify-content:center;min-height:120px"><div class="load"><span class="ga-sp-wave"><i></i><i></i><i></i><i></i><i></i></span>котировки обновляются…</div></div>
   </div>
+  <div class="band"><div class="box" id="f-band"></div><div class="txt"><b>Монетный дождь не ждёт. Первые 100 монет — за регистрацию.</b><a href="#">Купить</a></div></div>
   <footer><span>© 2026 Монета · не финсовет</span><a class="back" href="./index.html">← все демо</a> · <a class="back" href="../index.html">витрина пака</a></footer>
 </div>
 <script src="../../dist/ga-rain-fall.js?v=2"></script>
@@ -61,6 +67,7 @@
     gaBacteria.mount(document.getElementById('f-compound'), { count: 20, colors: EMBER }),
     gaCityNight.mount(document.getElementById('f-night'), { den: 14, colors: EMBER }),
     gaClockParticles.mount(document.getElementById('f-time'), { count: 60, colors: EMBER }),
+    gaRainFall.mount(document.getElementById('f-band'), { count: 60, colors: EMBER, bg: "#0e0a08" }),
   ];
   addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
 </script>

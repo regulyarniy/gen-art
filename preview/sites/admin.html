@@ -32,6 +32,10 @@
   .row3{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr;margin-top:12px}
   @media(max-width:800px){.row3{grid-template-columns:1fr}}
   .dep{display:flex;align-items:center;gap:10px;padding:14px;font-size:13px}
+  .band{position:relative;overflow:hidden;border-radius:12px;border:1px solid #1f2937;min-height:170px;display:flex;align-items:center;margin-top:12px}
+  .band .box{position:absolute;inset:0}
+  .band .txt{position:relative;padding:22px 24px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;width:100%;box-sizing:border-box}
+  .band .txt b{font-size:16px;flex:1;min-width:200px}
   .back{color:#a5b4fc;font-size:13px;text-decoration:none}
   footer{margin-top:18px;display:flex;justify-content:space-between;opacity:.5;font-size:12px}
 </style>
@@ -62,6 +66,7 @@
       <div class="card"><div class="dep">Аптайм: 99.99% за 90 дней</div></div>
       <div class="card"><div class="dep"><a class="back" href="./index.html">← все демо</a> · <a class="back" href="../index.html">витрина пака</a></div></div>
     </div>
+    <div class="band"><div class="box" id="a-band"></div><div class="txt"><b>Живой трафик: каждая точка — запрос. Подведи курсор — стая потянется.</b></div></div>
     <footer><span>Пульт v2.4</span><span>seed 7 · abyss</span></footer>
   </div>
 </div>
@@ -73,6 +78,7 @@
 <script src="../../dist/ga-radar-sonar.js?v=2"></script>
 <script src="../../dist/ga-city-night.js?v=2"></script>
 <script src="../../dist/ga-static-noise.js?v=2"></script>
+<script src="../../dist/ga-boids.js?v=2"></script>
 <script>
   const H = [
     gaTetrisRain.mount(document.getElementById('a-tasks'), { count: 6, speed: 1.4 }),
@@ -83,6 +89,7 @@
     gaRadarSonar.mount(document.getElementById('a-radar'), { count: 8 }),
     gaCityNight.mount(document.getElementById('a-dc'), { den: 12 }),
     gaStaticNoise.mount(document.getElementById('a-logs'), { count: 120, size: 1 }),
+    gaBoids.mount(document.getElementById('a-band'), { count: 60 }),
   ];
   addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
 </script>

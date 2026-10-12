@@ -23,6 +23,9 @@
   .grid2{display:grid;gap:14px;grid-template-columns:1fr 1fr;margin-top:14px}
   @media(max-width:700px){.grid2{grid-template-columns:1fr}.hero h1{font-size:28px}}
   .join{margin-top:26px;background:#0c1a12;border:1px solid #4d7c0f;border-radius:14px;padding:22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .join{position:relative;overflow:hidden}
+  .join .box{position:absolute;inset:0;opacity:.6}
+  .join>*:not(.box){position:relative}
   .join b{font-size:18px} .join a{background:#65a30d;color:#07130c;border-radius:10px;padding:10px 26px;font-weight:700;text-decoration:none}
   footer{opacity:.5;font-size:13px;margin-top:28px;display:flex;justify-content:space-between}
   .back{color:#a5b4fc;text-decoration:none}
@@ -46,7 +49,7 @@
     <div class="card"><h3>Карта тишины</h3><p>Изолинии мест, где тихо.</p><div class="box" id="e-topo" style="height:200px"></div></div>
   </div>
   <div class="card"><h3>Река</h3><p>Шёлковые ленты воды.</p><div class="box" id="e-river" style="height:150px"></div></div>
-  <div class="join"><b>Посади дерево — получи координаты</b><a href="#">Участвовать</a></div>
+  <div class="join"><div class="box" id="e-band"></div><b>Посади дерево — получи координаты</b><a href="#">Участвовать</a></div>
   <footer><span>© 2026 Глубоководье</span><a class="back" href="./index.html">← все демо</a> · <a class="back" href="../index.html">витрина пака</a></footer>
 </div>
 <script src="../../dist/ga-bg-flow.js?v=2"></script>
@@ -66,6 +69,7 @@
     gaDnaHelix.mount(document.getElementById('e-dna'), { colors: MOSS }),
     gaTopo.mount(document.getElementById('e-topo'), { colors: MOSS }),
     gaRibbon.mount(document.getElementById('e-river'), { count: 4, amp: 1.6, speed: .7, colors: MOSS }),
+    gaRibbon.mount(document.getElementById('e-band'), { count: 6, speed: 1.1, colors: MOSS }),
   ];
   addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
 </script>

@@ -24,6 +24,11 @@
   .grid2{display:grid;gap:14px;grid-template-columns:1fr 1fr;margin-top:14px}
   @media(max-width:700px){.grid2{grid-template-columns:1fr}.hero h1{font-size:30px}}
   .load{display:inline-flex;align-items:center;gap:10px;font-size:13px;padding:18px;opacity:.7}
+  .band{position:relative;overflow:hidden;background:#fff;border:2px solid #fed7aa;border-radius:18px;min-height:180px;display:flex;align-items:center;margin-top:14px}
+  .band .box{position:absolute;inset:0}
+  .band .txt{position:relative;padding:24px 28px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;width:100%;box-sizing:border-box}
+  .band .txt b{font-size:19px;flex:1;min-width:220px}
+  .band .txt a{background:#f97316;color:#fff;border-radius:999px;padding:10px 26px;font-weight:700;text-decoration:none}
   footer{opacity:.6;font-size:13px;margin-top:28px;display:flex;justify-content:space-between}
   .back{color:#7c3aed;text-decoration:none}
 </style>
@@ -47,6 +52,7 @@
     <div class="card"><h3>Диско-шар</h3><p>Калейдоскоп под потолком.</p><div class="box" id="p-disco"></div></div>
   </div>
   <div class="card"><div class="load"><span class="ga-sp-ring"></span>надуваем шарики…</div></div>
+  <div class="band"><div class="box" id="p-band"></div><div class="txt"><b>Диско-шар крутится, шарики надуты. Осталось позвать детей.</b><a href="#">Заказать</a></div></div>
   <footer><span>© 2026 Конфетти</span><a class="back" href="./index.html">← все демо</a> · <a class="back" href="../index.html">витрина пака</a></footer>
 </div>
 <script src="../../dist/ga-confetti-storm.js?v=2"></script>
@@ -63,6 +69,7 @@
     gaIsoCubes.mount(document.getElementById('p-iso'), { count: 26, bg: BG, colors: FUN }),
     gaJellyFloat.mount(document.getElementById('p-jelly'), { count: 7, bg: BG, colors: FUN }),
     gaKaleido.mount(document.getElementById('p-disco'), { count: 9, speed: 1.4, bg: BG, colors: FUN }),
+    gaKaleido.mount(document.getElementById('p-band'), { count: 7, bg: BG, colors: FUN }),
   ];
   addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
 </script>

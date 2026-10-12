@@ -4,7 +4,7 @@
 function shaderShell(global, fragBody) {
   const src = `globalThis.${global}=(()=>{const VS="#version 300 es\\nlayout(location=0)in vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";` +
   `const FS="#version 300 es\\nprecision highp float;uniform float t;uniform vec2 m;uniform float s;uniform vec2 r;uniform float z;uniform float b;out vec4 o;${fragBody}";` +
-  `function mount(el,o={}){el.style.position=el.style.position||"relative";const cv=document.createElement("canvas");cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;display:block";el.appendChild(cv);` +
+  `function mount(el,o={}){if(getComputedStyle(el).position=="static")el.style.position="relative";const cv=document.createElement("canvas");cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;display:block";el.appendChild(cv);` +
   `let W=0,Hh=0,raf=0,run=true,vis=true,t=Math.random()*100,mx=.5,my=.5,sx=0;const t0=performance.now();const SP=o.speed??1,ZM=o.zoom??1,BR=o.bright??1;` +
   `function fb(){const cx=cv.getContext("2d");if(!cx)return{destroy(){cv.remove()}};function d(){if(!run)return;const g=cx.createLinearGradient(0,0,W||300,Hh||150);g.addColorStop(0,"#0b1020");g.addColorStop(1,"#123324");cx.fillStyle=g;cx.fillRect(0,0,cv.width,cv.height)}function rs(){const r=el.getBoundingClientRect();W=Math.max(2,r.width|0);Hh=Math.max(2,r.height|0);cv.width=W;cv.height=Hh;d()}rs();const ro=(typeof ResizeObserver!="undefined")?new ResizeObserver(rs):null;ro&&ro.observe(el);return{destroy(){run=false;ro&&ro.disconnect();cv.remove()}}}` +
   `const gl=cv.getContext("webgl2",{antialias:false,alpha:false});if(!gl)return fb();` +
