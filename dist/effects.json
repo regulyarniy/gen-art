@@ -1,0 +1,1170 @@
+{
+  "seed": 7,
+  "palette": "abyss",
+  "effects": [
+    {
+      "id": "bg-flow",
+      "file": "ga-bg-flow.js",
+      "global": "gaBgFlow",
+      "kind": "canvas",
+      "title": "Ветер над полем",
+      "meaning": "Невидимые потоки несут семена идей — остановись, и увидишь их след.",
+      "opts": {
+        "count": 550
+      },
+      "demo": null,
+      "bytes": 2925,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          50,
+          1500,
+          1,
+          550,
+          "Частицы"
+        ],
+        [
+          "trail",
+          "range",
+          0.02,
+          0.3,
+          0.01,
+          0.08,
+          "Шлейф"
+        ],
+        [
+          "len",
+          "range",
+          2,
+          20,
+          0.5,
+          8,
+          "Длина"
+        ]
+      ]
+    },
+    {
+      "id": "ribbon",
+      "file": "ga-ribbon.js",
+      "global": "gaRibbon",
+      "kind": "canvas",
+      "title": "Шёлк памяти",
+      "meaning": "Семь лент прошлого, колеблемых дыханием настоящего.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2842,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          2,
+          14,
+          1,
+          7,
+          "Линии"
+        ],
+        [
+          "amp",
+          "range",
+          0.2,
+          2.5,
+          0.1,
+          1,
+          "Размах"
+        ]
+      ]
+    },
+    {
+      "id": "dots",
+      "file": "ga-dots.js",
+      "global": "gaDots",
+      "kind": "canvas",
+      "title": "Дыхание толпы",
+      "meaning": "Каждая точка — один голос; вместе они пульсируют, рядом с тобой — громче.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2537,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "step",
+          "int",
+          12,
+          36,
+          1,
+          22,
+          "Шаг"
+        ],
+        [
+          "size",
+          "range",
+          0.5,
+          3,
+          0.1,
+          1,
+          "Размер"
+        ]
+      ]
+    },
+    {
+      "id": "topo",
+      "file": "ga-topo.js",
+      "global": "gaTopo",
+      "kind": "canvas",
+      "title": "Карта тишины",
+      "meaning": "Изолинии внутреннего ландшафта — рельеф того, о чём молчат.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2415,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          5,
+          25,
+          1,
+          13,
+          "Линии"
+        ],
+        [
+          "amp",
+          "range",
+          0.2,
+          2.5,
+          0.1,
+          1,
+          "Размах"
+        ]
+      ]
+    },
+    {
+      "id": "spin-ring",
+      "file": "ga-spin-ring.css",
+      "global": null,
+      "kind": "css",
+      "title": "Кольцо ожидания",
+      "meaning": "Классика жанра: круг, который никуда не спешит, но держит слово.",
+      "opts": {},
+      "demo": "<span class=\"ga-sp-ring\"></span>",
+      "bytes": 425,
+      "budget": 1024,
+      "params": [
+        [
+          "size",
+          "range",
+          0.4,
+          2.2,
+          0.1,
+          1,
+          "Размер"
+        ],
+        [
+          "speed",
+          "range",
+          0.25,
+          3,
+          0.05,
+          1,
+          "Скорость"
+        ]
+      ]
+    },
+    {
+      "id": "spin-dots",
+      "file": "ga-spin-dots.css",
+      "global": null,
+      "kind": "css",
+      "title": "Азбука Морзе",
+      "meaning": "Три точки шлют сигналы: жди, всё уже летит к тебе.",
+      "opts": {},
+      "demo": "<span class=\"ga-sp-dots\"><i></i><i></i><i></i></span>",
+      "bytes": 645,
+      "budget": 1024,
+      "params": [
+        [
+          "size",
+          "range",
+          0.4,
+          2.2,
+          0.1,
+          1,
+          "Размер"
+        ],
+        [
+          "speed",
+          "range",
+          0.25,
+          3,
+          0.05,
+          1,
+          "Скорость"
+        ]
+      ]
+    },
+    {
+      "id": "spin-wave",
+      "file": "ga-spin-wave.css",
+      "global": null,
+      "kind": "css",
+      "title": "Шёпот",
+      "meaning": "Эквалайзер неслышной музыки: процесс звучит, даже когда тихо.",
+      "opts": {},
+      "demo": "<span class=\"ga-sp-wave\"><i></i><i></i><i></i><i></i><i></i></span>",
+      "bytes": 810,
+      "budget": 1024,
+      "params": [
+        [
+          "size",
+          "range",
+          0.4,
+          2.2,
+          0.1,
+          1,
+          "Размер"
+        ],
+        [
+          "speed",
+          "range",
+          0.25,
+          3,
+          0.05,
+          1,
+          "Скорость"
+        ]
+      ]
+    },
+    {
+      "id": "dot-terrain",
+      "file": "ga-dot-terrain.js",
+      "global": "gaDotTerrain",
+      "kind": "canvas",
+      "title": "Рельеф из точек",
+      "meaning": "Тысяча точек держит форму холмов — высота читается размером.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2517,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "den",
+          "int",
+          14,
+          48,
+          1,
+          30,
+          "Сетка"
+        ],
+        [
+          "amp",
+          "range",
+          0.2,
+          2.5,
+          0.1,
+          1,
+          "Рельеф"
+        ]
+      ]
+    },
+    {
+      "id": "rain-fall",
+      "file": "ga-rain-fall.js",
+      "global": "gaRainFall",
+      "kind": "canvas",
+      "title": "Падающие тире",
+      "meaning": "Матричный дождь для тех, кто не читает глифы.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2583,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          10,
+          200,
+          1,
+          70,
+          "Капли"
+        ],
+        [
+          "len",
+          "range",
+          0.3,
+          3,
+          0.1,
+          1,
+          "Длина"
+        ]
+      ]
+    },
+    {
+      "id": "kaleido",
+      "file": "ga-kaleido.js",
+      "global": "gaKaleido",
+      "kind": "canvas",
+      "title": "Калейдоскоп",
+      "meaning": "Шесть дрожащих лепестков из чистой тригонометрии.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2489,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          2,
+          12,
+          1,
+          6,
+          "Лепестки"
+        ],
+        [
+          "size",
+          "range",
+          0.4,
+          2,
+          0.1,
+          1,
+          "Размер"
+        ]
+      ]
+    },
+    {
+      "id": "static-noise",
+      "file": "ga-static-noise.js",
+      "global": "gaStaticNoise",
+      "kind": "canvas",
+      "title": "Телеппомехи",
+      "meaning": "Триста двадцать искр за кадр и редкая горизонтальная слеза.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2373,
+      "budget": 4096,
+      "params": [
+        [
+          "count",
+          "int",
+          50,
+          1000,
+          1,
+          320,
+          "Искры"
+        ],
+        [
+          "tear",
+          "range",
+          0,
+          0.5,
+          0.01,
+          0.12,
+          "Разрывы"
+        ],
+        [
+          "size",
+          "int",
+          1,
+          5,
+          1,
+          2,
+          "Зерно"
+        ]
+      ]
+    },
+    {
+      "id": "dna-helix",
+      "file": "ga-dna-helix.js",
+      "global": "gaDnaHelix",
+      "kind": "canvas",
+      "title": "Спираль жизни",
+      "meaning": "Двойная нить с перекладинами плывёт слева направо.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2550,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "amp",
+          "range",
+          0.2,
+          2.5,
+          0.1,
+          1,
+          "Размах"
+        ],
+        [
+          "step",
+          "int",
+          4,
+          16,
+          1,
+          8,
+          "Шаг"
+        ]
+      ]
+    },
+    {
+      "id": "black-hole",
+      "file": "ga-black-hole.js",
+      "global": "gaBlackHole",
+      "kind": "canvas",
+      "title": "Чёрная дыра",
+      "meaning": "Аккреционный диск жадно пожирает свет — смотри, но не подходи.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2602,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          30,
+          400,
+          1,
+          130,
+          "Звёзды"
+        ],
+        [
+          "disk",
+          "range",
+          0.15,
+          0.9,
+          0.05,
+          0.4,
+          "Диск"
+        ]
+      ]
+    },
+    {
+      "id": "glass-rain",
+      "file": "ga-glass-rain.js",
+      "global": "gaGlassRain",
+      "kind": "canvas",
+      "title": "Дождь на стекле",
+      "meaning": "Капли ползут по стеклу и расходятся кругами.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2545,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          5,
+          80,
+          1,
+          26,
+          "Капли"
+        ],
+        [
+          "size",
+          "range",
+          0.4,
+          2.5,
+          0.1,
+          1,
+          "Размер"
+        ]
+      ]
+    },
+    {
+      "id": "magnet-field",
+      "file": "ga-magnet-field.js",
+      "global": "gaMagnetField",
+      "kind": "canvas",
+      "title": "Магнитное поле",
+      "meaning": "Железные опилки выстраиваются по указке невидимого магнита.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2457,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "step",
+          "int",
+          12,
+          36,
+          1,
+          22,
+          "Шаг"
+        ],
+        [
+          "len",
+          "int",
+          2,
+          14,
+          1,
+          6,
+          "Длина"
+        ]
+      ]
+    },
+    {
+      "id": "jelly-float",
+      "file": "ga-jelly-float.js",
+      "global": "gaJellyFloat",
+      "kind": "canvas",
+      "title": "Медузы",
+      "meaning": "Шесть медуз дрейфуют вверх и шевелят щупальцами.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2773,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          2,
+          14,
+          1,
+          6,
+          "Медузы"
+        ],
+        [
+          "size",
+          "range",
+          0.4,
+          2.2,
+          0.1,
+          1,
+          "Размер"
+        ]
+      ]
+    },
+    {
+      "id": "boids",
+      "file": "ga-boids.js",
+      "global": "gaBoids",
+      "kind": "canvas",
+      "title": "Стая",
+      "meaning": "Мурмурация: птицы-пиксели тянутся к курсору, как к хлебу.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2567,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          10,
+          250,
+          1,
+          70,
+          "Птицы"
+        ],
+        [
+          "pull",
+          "range",
+          0,
+          0.12,
+          0.005,
+          0.03,
+          "Стая"
+        ]
+      ]
+    },
+    {
+      "id": "city-night",
+      "file": "ga-city-night.js",
+      "global": "gaCityNight",
+      "kind": "canvas",
+      "title": "Ночной город",
+      "meaning": "Сто шестьдесят окон моргают: кто-то не спит.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2443,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "den",
+          "int",
+          8,
+          24,
+          1,
+          16,
+          "Дома"
+        ],
+        [
+          "light",
+          "range",
+          -0.9,
+          0.9,
+          0.05,
+          -0.1,
+          "Свет"
+        ]
+      ]
+    },
+    {
+      "id": "moire-rings",
+      "file": "ga-moire-rings.js",
+      "global": "gaMoireRings",
+      "kind": "canvas",
+      "title": "Муаровые кольца",
+      "meaning": "Два центра кругов спорят — рождается муар.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2393,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "step",
+          "int",
+          3,
+          14,
+          1,
+          7,
+          "Шаг"
+        ],
+        [
+          "twin",
+          "toggle",
+          0,
+          1,
+          1,
+          1,
+          "Двойник"
+        ]
+      ]
+    },
+    {
+      "id": "tetris-rain",
+      "file": "ga-tetris-rain.js",
+      "global": "gaTetrisRain",
+      "kind": "canvas",
+      "title": "Тетрис-дождь",
+      "meaning": "Фигурки падают, но складывать их некому.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2683,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          2,
+          20,
+          1,
+          8,
+          "Фигуры"
+        ],
+        [
+          "size",
+          "range",
+          0.5,
+          2,
+          0.1,
+          1,
+          "Размер"
+        ]
+      ]
+    },
+    {
+      "id": "ocean-layers",
+      "file": "ga-ocean-layers.js",
+      "global": "gaOceanLayers",
+      "kind": "canvas",
+      "title": "Девятый вал",
+      "meaning": "Пять волн идут друг на друга полупрозрачным строем.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2395,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          2,
+          8,
+          1,
+          5,
+          "Слои"
+        ],
+        [
+          "amp",
+          "range",
+          0.2,
+          2.5,
+          0.1,
+          1,
+          "Волны"
+        ]
+      ]
+    },
+    {
+      "id": "bacteria",
+      "file": "ga-bacteria.js",
+      "global": "gaBacteria",
+      "kind": "canvas",
+      "title": "Деление бактерий",
+      "meaning": "Клетки растут, лопаются и делятся пополам.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2681,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          4,
+          40,
+          1,
+          14,
+          "Клетки"
+        ],
+        [
+          "maxr",
+          "int",
+          8,
+          30,
+          1,
+          16,
+          "Деление"
+        ]
+      ]
+    },
+    {
+      "id": "radar-sonar",
+      "file": "ga-radar-sonar.js",
+      "global": "gaRadarSonar",
+      "kind": "canvas",
+      "title": "Сонар",
+      "meaning": "Луч радара крутится и будит спящие отметки.",
+      "opts": {},
+      "demo": null,
+      "bytes": 3024,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          2,
+          40,
+          1,
+          12,
+          "Метки"
+        ],
+        [
+          "trail",
+          "range",
+          0.03,
+          0.4,
+          0.01,
+          0.12,
+          "Шлейф"
+        ]
+      ]
+    },
+    {
+      "id": "iso-cubes",
+      "file": "ga-iso-cubes.js",
+      "global": "gaIsoCubes",
+      "kind": "canvas",
+      "title": "Изометрия",
+      "meaning": "Двадцать два куба прыгают на батуте.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2751,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          5,
+          70,
+          1,
+          22,
+          "Кубы"
+        ],
+        [
+          "size",
+          "range",
+          0.4,
+          2.2,
+          0.1,
+          1,
+          "Размер"
+        ]
+      ]
+    },
+    {
+      "id": "confetti-storm",
+      "file": "ga-confetti-storm.js",
+      "global": "gaConfettiStorm",
+      "kind": "canvas",
+      "title": "Конфетти-шторм",
+      "meaning": "Восемьдесят бумажек крутятся в вихре праздника.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2535,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          10,
+          300,
+          1,
+          80,
+          "Бумажки"
+        ],
+        [
+          "size",
+          "range",
+          0.4,
+          2.5,
+          0.1,
+          1,
+          "Размер"
+        ]
+      ]
+    },
+    {
+      "id": "spider-eyes",
+      "file": "ga-spider-eyes.js",
+      "global": "gaSpiderEyes",
+      "kind": "canvas",
+      "title": "Глаза из темноты",
+      "meaning": "Четырнадцать глаз с веками моргают и следят за курсором.",
+      "opts": {},
+      "demo": null,
+      "bytes": 3204,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          2,
+          30,
+          1,
+          14,
+          "Глаза"
+        ],
+        [
+          "follow",
+          "toggle",
+          0,
+          1,
+          1,
+          1,
+          "Взгляд"
+        ]
+      ]
+    },
+    {
+      "id": "clock-particles",
+      "file": "ga-clock-particles.js",
+      "global": "gaClockParticles",
+      "kind": "canvas",
+      "title": "Песочные часы",
+      "meaning": "Семьдесят песчинок сыплются сквозь горловину времени.",
+      "opts": {},
+      "demo": null,
+      "bytes": 2656,
+      "budget": 4096,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "count",
+          "int",
+          10,
+          250,
+          1,
+          70,
+          "Песчинки"
+        ],
+        [
+          "scale",
+          "range",
+          0.25,
+          0.6,
+          0.01,
+          0.42,
+          "Часы"
+        ]
+      ]
+    },
+    {
+      "id": "plasma-sea",
+      "file": "ga-plasma-sea.js",
+      "global": "gaPlasmaSea",
+      "kind": "shader",
+      "title": "Плазменное море",
+      "meaning": "Жидкий синус переливается всеми палитрами сразу.",
+      "opts": {},
+      "demo": null,
+      "bytes": 3889,
+      "budget": 5120,
+      "params": [
+        [
+          "speed",
+          "range",
+          0.1,
+          3,
+          0.1,
+          1,
+          "Скорость"
+        ],
+        [
+          "zoom",
+          "range",
+          0.4,
+          2.2,
+          0.1,
+          1,
+          "Зум"
+        ],
+        [
+          "bright",
+          "range",
+          0.4,
+          1.5,
+          0.05,
+          1,
+          "Яркость"
+        ]
+      ]
+    },
+    {
+      "id": "spin-glitch",
+      "file": "ga-spin-glitch.css",
+      "global": null,
+      "kind": "css",
+      "title": "Глитч-куб",
+      "meaning": "Квадрат косит и двоится — загрузка с помехами.",
+      "opts": {},
+      "demo": "<span class=\"ga-sp-glitch\"></span>",
+      "bytes": 703,
+      "budget": 1024,
+      "params": [
+        [
+          "size",
+          "range",
+          0.4,
+          2.2,
+          0.1,
+          1,
+          "Размер"
+        ],
+        [
+          "speed",
+          "range",
+          0.25,
+          3,
+          0.05,
+          1,
+          "Скорость"
+        ]
+      ]
+    }
+  ]
+}

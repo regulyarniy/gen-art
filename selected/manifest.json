@@ -1,0 +1,30 @@
+{
+  "seed": 7,
+  "palette": 0,
+  "accepted": [
+    {
+      "id": "bg-flow",
+      "file": "ga-bg-flow.js",
+      "global": "gaBgFlow",
+      "title": "Ветер над полем"
+    },
+    {
+      "id": "dots",
+      "file": "ga-dots.js",
+      "global": "gaDots",
+      "title": "Дыхание толпы"
+    },
+    {
+      "id": "ribbon",
+      "file": "ga-ribbon.js",
+      "global": "gaRibbon",
+      "title": "Шёлк памяти"
+    },
+    {
+      "id": "topo",
+      "file": "ga-topo.js",
+      "global": "gaTopo",
+      "title": "Карта тишины"
+    }
+  ]
+}

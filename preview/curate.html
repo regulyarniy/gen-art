@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Отбор виньеток — принять / отклонить</title>
+<style>
+  :root{color-scheme:dark}
+  body{margin:0;background:#05070c;color:#e5e7eb;font:15px/1.5 system-ui,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:20px}
+  .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .top h1{font-size:20px;margin:0;flex:1}
+  .pill{background:#111827;border:1px solid #374151;border-radius:999px;padding:2px 12px;font-size:13px}
+  .pill b{color:#5eead4}.pill s{color:#f87171}
+  .dots{display:flex;gap:6px;margin:12px 0;flex-wrap:wrap}
+  .dots i{width:14px;height:14px;border-radius:50%;background:#374151}
+  .dots i.ok{background:#34d399}.dots i.no{background:#f87171}.dots i.cur{outline:2px solid #a5b4fc}
+  .stage{position:relative;min-height:52vh;border-radius:14px;overflow:hidden;background:#070b14;border:1px solid #1f2937;display:flex;align-items:center;justify-content:center}
+  .meta{padding:12px 4px}
+  .meta h2{margin:0;font-size:19px}
+  .meta .file{opacity:.55;font-size:12.5px;font-family:ui-monospace,monospace;margin-left:10px}
+  .meta p{margin:6px 0 0;opacity:.8;font-style:italic}
+  .btns{display:flex;gap:12px;margin-top:14px}
+  button{flex:1;padding:14px;border-radius:12px;border:1px solid #374151;font-size:16px;cursor:pointer;color:#fff}
+  #no{background:#3b0f1a;border-color:#7f1d1d}#no:hover{background:#4c1322}
+  #yes{background:#06382c;border-color:#065f46}#yes:hover{background:#074434}
+  #back{flex:0 0 120px;background:#111827}
+  kbd{background:#1f2937;border-radius:6px;padding:1px 7px;font-size:12px}
+  .hint{opacity:.55;font-size:13px;margin-top:10px}
+  #done{display:none}
+  #done ul{list-style:none;padding:0;margin:12px 0}
+  #done li{background:#0a0f1c;border:1px solid #1f2937;border-radius:10px;padding:8px 12px;margin-bottom:8px;font-size:14px}
+  #done li a{color:#a5b4fc;font-size:12.5px;margin-left:8px}
+  textarea{width:100%;min-height:130px;background:#0a0f1c;color:#a5b4fc;border:1px solid #1f2937;border-radius:10px;font:12px/1.5 ui-monospace,monospace;box-sizing:border-box}
+  .row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+  .row button{flex:1;white-space:nowrap;background:#111827;font-size:14px;padding:10px}
+  .sync{font-size:12px;opacity:.5}
+  .sync.err{color:#f87171;opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Отбор виньеток <span class="pill" id="batchpill"></span></h1>
+    <span class="pill" id="counter"></span>
+    <span class="pill">✅ <b id="okn">0</b> · ❌ <s id="non">0</s></span>
+    <span class="sync" id="sync">связь…</span>
+  </div>
+  <div class="dots" id="dots"></div>
+  <div id="quiz">
+    <div class="stage" id="stage"><p style="opacity:.5">загрузка эффектов…</p></div>
+    <div class="meta"><h2><span id="title"></span><span class="file" id="file"></span></h2><p id="meaning"></p></div>
+    <div class="btns" id="votebtns">
+      <button id="back" title="к предыдущему">← назад</button>
+      <button id="no">❌ отклонить</button>
+      <button id="yes">✅ принять</button>
+    </div>
+    <p class="hint" id="votehint"><kbd>←</kbd> отклонить · <kbd>→</kbd> принять · <kbd>Backspace</kbd> назад. Каждый голос сразу пишется на диск — агент подхватит итог сам, копировать ничего не нужно.</p>
+  </div>
+  <div id="done">
+    <h2>Итог: принято <span id="okn2"></span></h2>
+    <ul id="list"></ul>
+    <div class="row">
+      <button id="restart">Пройти заново</button>
+    </div>
+    <p class="hint">Решения уже лежат на диске — просто скажи агенту «разбирай батч», он добавит принятые в пак, а отклонённые удалит полностью.</p>
+  </div>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+let BATCH = params.get("batch") || null; // null = newest staging, "main" = gallery
+let BASE = "";
+let ITEMS = [];
+let state = { i: 0, dec: {} };
+let handle = null;
+
+const lsKey = () => "ga-curate-v4-" + BATCH;
+function setSync(msg, err) {
+  $("sync").textContent = msg;
+  $("sync").className = "sync" + (err ? " err" : "");
+}
+async function api(path, body, method) {
+  const sep = path.includes("?") ? "&" : "?";
+  const url = body ? path : `${path}${sep}batch=${encodeURIComponent(BATCH)}`;
+  const r = await fetch(url, body ? {
+    method: method || "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...body, batch: BATCH }),
+  } : {});
+  if (!r.ok) throw new Error(path + " " + r.status);
+  return r.json();
+}
+function saveLocal() { try { localStorage.setItem(lsKey(), JSON.stringify(state)); } catch (e) {} }
+function loadLocal() { try { const s = JSON.parse(localStorage.getItem(lsKey())); if (s && s.dec) return s; } catch (e) {} return null; }
+function counts() {
+  const v = Object.values(state.dec);
+  $("okn").textContent = v.filter(Boolean).length;
+  $("non").textContent = v.filter((x) => x === false).length;
+}
+function renderDots() {
+  $("dots").innerHTML = ITEMS.map((t, k) => {
+    const d = state.dec[t.id];
+    return `<i class="${d === true ? "ok" : d === false ? "no" : ""} ${k === state.i ? "cur" : ""}" title="${t.title}"></i>`;
+  }).join("");
+}
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = src; s.onload = res; s.onerror = () => rej(new Error("no " + src));
+    document.head.appendChild(s);
+  });
+}
+const cssInjected = new Set();
+async function ensureCSS(t) {
+  if (cssInjected.has(t.file)) return;
+  const css = await (await fetch(`${t.base}/${t.file}?v=2`)).text();
+  const st = document.createElement("style");
+  st.dataset.f = t.file; st.textContent = css;
+  document.head.appendChild(st);
+  cssInjected.add(t.file);
+}
+const gallery = () => BATCH === "main";
+async function show() {
+  if (handle) { try { handle.destroy(); } catch (e) {} handle = null; }
+  const t = ITEMS[state.i];
+  $("stage").innerHTML = `<p style="opacity:.5">загрузка…</p>`;
+  try {
+    if (t.kind === "css") {
+      await ensureCSS(t);
+      $("stage").innerHTML = t.demo;
+    } else {
+      $("stage").innerHTML = "";
+      handle = window[t.global].mount($("stage"), t.opts || {});
+    }
+  }
+  catch (e) { $("stage").innerHTML = `<p style="padding:20px">Ошибка: ${e}</p>`; }
+  $("title").textContent = `${state.i + 1}. ${t.title}`;
+  $("file").textContent = `${t.file} · ${(t.bytes / 1024).toFixed(2)} КБ`;
+  $("meaning").textContent = t.meaning;
+  $("counter").textContent = `${state.i + 1} / ${ITEMS.length}`;
+  $("back").disabled = state.i === 0;
+  counts(); renderDots();
+}
+async function vote(ok, src) {
+  if (gallery()) return;
+  const t = ITEMS[state.i];
+  state.dec[t.id] = ok;
+  saveLocal();
+  try { await api("/api/decide", { id: t.id, ok, src }); setSync("сохранено ✓"); }
+  catch (e) { setSync("нет связи с сервером — только браузер", true); }
+  if (state.i < ITEMS.length - 1) { state.i++; saveLocal(); show(); }
+  else { saveLocal(); finish(); }
+}
+function finish() {
+  if (handle) { try { handle.destroy(); } catch (e) {} handle = null; }
+  $("quiz").style.display = "none"; $("done").style.display = "block";
+  const acc = ITEMS.filter((t) => state.dec[t.id]);
+  $("okn2").textContent = acc.length + " из " + ITEMS.length;
+  $("list").innerHTML = acc.map((t) => `<li>✅ <b>${t.title}</b> <span style="opacity:.5;font-size:12px">${t.file}</span></li>`).join("")
+    || "<li>Ничего не принято.</li>";
+  counts(); renderDots();
+}
+async function restart() {
+  state = { i: 0, dec: {} }; saveLocal();
+  try { await api("/api/reset", {}, "POST"); setSync("сохранено ✓"); }
+  catch (e) { setSync("нет связи с сервером — только браузер", true); }
+  $("done").style.display = "none"; $("quiz").style.display = "block"; show();
+}
+$("yes").onclick = () => vote(true, "click");
+$("no").onclick = () => vote(false, "click");
+$("back").onclick = () => { if (state.i > 0) { state.i--; saveLocal(); show(); } };
+$("restart").onclick = restart;
+addEventListener("keydown", (e) => {
+  if ($("done").style.display === "block") return;
+  if (!e.isTrusted || e.repeat) return;
+  if (e.key === "ArrowRight") vote(true, "key");
+  else if (e.key === "ArrowLeft") vote(false, "key");
+  else if (e.key === "Backspace") { e.preventDefault(); $("back").click(); }
+});
+(async function boot() {
+  try {
+    if (!BATCH) {
+      const b = await (await fetch("/api/batches")).json();
+      BATCH = (b.batches || []).length ? b.batches[b.batches.length - 1].batch : "main";
+    }
+    if (BATCH === "all") {
+      // полное голосование: пак + все батчи одним списком
+      const pack = await (await fetch(`../dist/effects.json?v=2`)).json();
+      ITEMS = pack.effects.map((t) => ({ ...t, base: "../dist" }));
+      const b = await (await fetch("/api/batches")).json();
+      for (const { batch } of b.batches || []) {
+        const cat = await (await fetch(`../staging/${batch}/effects.json?v=2`)).json();
+        for (const t of cat.effects) ITEMS.push({ ...t, base: `../staging/${batch}` });
+      }
+      $("batchpill").textContent = `всё сразу: ${ITEMS.length}`;
+    } else {
+      const main = BATCH === "main";
+      BASE = main ? "../dist" : `../staging/${BATCH}`;
+      const cat = await (await fetch(`${BASE}/effects.json?v=2`)).json();
+      ITEMS = cat.effects.map((t) => ({ ...t, base: BASE }));
+      $("batchpill").textContent = main ? "утверждённый пак" : "батч " + BATCH;
+      if (main) {
+        $("votebtns").style.display = "none";
+        $("votehint").innerHTML = `Это утверждённый пак — здесь только смотрим. Новые кандидаты живут в батчах (<code>?batch=…</code>), всё сразу — <code>?batch=all</code>.`;
+      }
+    }
+    await Promise.all(ITEMS.filter((t) => t.kind !== "css").map((t) => loadScript(`${t.base}/${t.file}?v=2`)));
+  } catch (e) {
+    $("stage").innerHTML = `<p style="padding:20px">Не загрузилось: ${e}. Нужен <code>node preview/server.mjs</code> и <code>node generator/gen.mjs</code>.</p>`;
+    return;
+  }
+  const local = loadLocal();
+  if (local) state = { i: Math.min(local.i || 0, ITEMS.length - 1), dec: local.dec };
+  if (!gallery()) {
+    try {
+      const srv = await api("/api/decisions");
+      for (const [id, v] of Object.entries(srv.votes || {})) {
+        if (ITEMS.some((t) => t.id === id)) state.dec[id] = !!v.ok;
+      }
+      setSync("связь с диском ✓");
+    } catch (e) { setSync("нет связи с сервером — только браузер", true); }
+  } else setSync("галерея");
+  const voted = ITEMS.filter((t) => t.id in state.dec).length;
+  state.i = Math.min(voted, ITEMS.length - 1);
+  if (!gallery() && voted === ITEMS.length && ITEMS.length) finish(); else show();
+})();
+</script>
+</body>
+</html>

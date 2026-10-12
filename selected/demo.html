@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>selected demo</title>
+<style>
+body{margin:0;background:#05070c;color:#e5e7eb;font:14px/1.5 system-ui,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:24px}.grid{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.card{background:#0a0f1c;border:1px solid #1f2937;border-radius:12px;overflow:hidden}
+.box{position:relative;min-height:240px}.box.center{display:flex;align-items:center;justify-content:center;min-height:180px}
+.meta{padding:8px 12px;border-top:1px solid #1f2937}
+.meta span{opacity:.5;font-size:12px;margin-left:8px;font-family:ui-monospace,monospace}
+</style></head><body><div class="wrap"><h1>Выбранное — 4</h1>
+<p>Один тег: <code>&lt;script src="ga-selected.js"&gt;&lt;/script&gt;</code></p>
+<div class="grid">
+    <div class="card"><div class="box" id="v0"></div><div class="meta"><b>Ветер над полем</b><span>ga-bg-flow.js · window.gaBgFlow</span></div></div>
+    <div class="card"><div class="box" id="v1"></div><div class="meta"><b>Дыхание толпы</b><span>ga-dots.js · window.gaDots</span></div></div>
+    <div class="card"><div class="box" id="v2"></div><div class="meta"><b>Шёлк памяти</b><span>ga-ribbon.js · window.gaRibbon</span></div></div>
+    <div class="card"><div class="box" id="v3"></div><div class="meta"><b>Карта тишины</b><span>ga-topo.js · window.gaTopo</span></div></div>
+</div></div>
+<script src="./ga-selected.js"></script>
+<script>
+  const H = [];
+  H.push(gaBgFlow.mount(document.getElementById('v0'), {"count":550}));
+  H.push(gaDots.mount(document.getElementById('v1'), {}));
+  H.push(gaRibbon.mount(document.getElementById('v2'), {}));
+  H.push(gaTopo.mount(document.getElementById('v3'), {}));
+  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
+</script>
+</body></html>

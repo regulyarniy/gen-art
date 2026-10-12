@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gen-art-zero — пак</title>
+<link rel="stylesheet" href="../dist/ga-spin-ring.css?v=2">
+<link rel="stylesheet" href="../dist/ga-spin-dots.css?v=2">
+<link rel="stylesheet" href="../dist/ga-spin-wave.css?v=2">
+<link rel="stylesheet" href="../dist/ga-spin-glitch.css?v=2">
+<style>
+  body{margin:0;background:#05070c;color:#e5e7eb;font:14px/1.5 system-ui,sans-serif}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px}
+  h1{margin:0 0 4px} .sub{opacity:.7;margin:0 0 18px}
+  .grid{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+  .card{background:#0a0f1c;border:1px solid #1f2937;border-radius:12px;overflow:hidden}
+  .box{position:relative;overflow:hidden;min-height:230px;background:#070b14}
+  .meta{padding:10px 14px 12px;border-top:1px solid #1f2937}
+  .meta b{font-size:14px} .meta span{opacity:.55;font-size:12px;margin-left:8px}
+  .meta p{margin:4px 0 0;font-size:13px;opacity:.8;font-style:italic}
+  .row{display:flex;gap:28px;align-items:center;justify-content:center;padding:26px;background:#0a0f1c;border:1px solid #1f2937;border-radius:12px;margin-top:18px}
+  .row figure{margin:0;display:flex;flex-direction:column;gap:10px;align-items:center;font-size:12px;opacity:.85}
+  code{color:#a5b4fc}
+  .bgt{font:11px/1 ui-monospace,monospace;opacity:.6;margin-left:8px;white-space:nowrap}
+  .gear{cursor:pointer;background:#111827;color:#e5e7eb;border:1px solid #374151;border-radius:8px;padding:2px 9px;font-size:13px}
+  .meta .gear{position:absolute;top:8px;right:10px}
+  .meta{position:relative}
+  .row figure .gear{margin-top:2px}
+  .pop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:50}
+  .pop[hidden]{display:none}
+  .panel{background:#0a0f1c;border:1px solid #374151;border-radius:14px;padding:18px;width:min(340px,92vw);max-height:86vh;overflow:auto}
+  .panel h3{margin:0 0 4px;font-size:15px}
+  .panel .file{font:11px ui-monospace,monospace;opacity:.55;margin-bottom:10px}
+  .prow{margin:10px 0;font-size:13px}
+  .prow label{display:flex;align-items:center;gap:10px}
+  .prow .nm{flex:0 0 86px;opacity:.85}
+  .prow input[type=range]{flex:1;accent-color:#5eead4}
+  .prow input[type=color]{width:44px;height:26px;padding:0;border:1px solid #374151;background:none}
+  .prow select{flex:1;background:#111827;color:#e5e7eb;border:1px solid #374151;border-radius:8px;padding:4px}
+  .prow .val{flex:0 0 52px;text-align:right;font-family:ui-monospace,monospace;opacity:.75}
+  .pbtns{display:flex;gap:10px;margin-top:14px}
+  .pbtns button{flex:1;padding:9px;border-radius:10px;border:1px solid #374151;background:#111827;color:#fff;cursor:pointer;font-size:14px}
+  #pp-code{width:100%;box-sizing:border-box;min-height:104px;background:#05070c;color:#a5b4fc;border:1px solid #1f2937;border-radius:10px;font:11px/1.5 ui-monospace,monospace;white-space:pre;overflow:auto;margin-top:12px;resize:vertical}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>gen-art-zero — пак (29)</h1>
+  <p class="sub">Ноль зависимостей: <code>mount(el) → destroy()</code>. Двигай мышь над блоками, скролль — каждая сцена дышит по-своему. Бейдж — вес/бюджет, шестерёнка — параметры и код для вставки.</p>
+  <div class="grid">
+    <div class="card"><div class="box" id="v-flow"></div><div class="meta"><b>Ветер над полем</b><span>ga-bg-flow.js</span><p>Невидимые потоки несут семена идей — остановись, и увидишь их след.</p></div></div>
+    <div class="card"><div class="box" id="v-ribbon"></div><div class="meta"><b>Шёлк памяти</b><span>ga-ribbon.js</span><p>Семь лент прошлого, колеблемых дыханием настоящего.</p></div></div>
+    <div class="card"><div class="box" id="v-dots"></div><div class="meta"><b>Дыхание толпы</b><span>ga-dots.js</span><p>Каждая точка — один голос; вместе они пульсируют, рядом с тобой — громче.</p></div></div>
+    <div class="card"><div class="box" id="v-topo"></div><div class="meta"><b>Карта тишины</b><span>ga-topo.js</span><p>Изолинии внутреннего ландшафта — рельеф того, о чём молчат.</p></div></div>
+    <div class="card"><div class="box" id="v-terrain"></div><div class="meta"><b>Рельеф из точек</b><span>ga-dot-terrain.js</span><p>Тысяча точек держит форму холмов — высота читается размером.</p></div></div>
+    <div class="card"><div class="box" id="v-rain"></div><div class="meta"><b>Падающие тире</b><span>ga-rain-fall.js</span><p>Матричный дождь для тех, кто не читает глифы.</p></div></div>
+    <div class="card"><div class="box" id="v-kaleido"></div><div class="meta"><b>Калейдоскоп</b><span>ga-kaleido.js</span><p>Шесть дрожащих лепестков из чистой тригонометрии.</p></div></div>
+    <div class="card"><div class="box" id="v-noise"></div><div class="meta"><b>Телеппомехи</b><span>ga-static-noise.js</span><p>Триста двадцать искр за кадр и редкая горизонтальная слеза.</p></div></div>
+    <div class="card"><div class="box" id="v-dna"></div><div class="meta"><b>Спираль жизни</b><span>ga-dna-helix.js</span><p>Двойная нить с перекладинами плывёт слева направо.</p></div></div>
+    <div class="card"><div class="box" id="v-blackhole"></div><div class="meta"><b>Чёрная дыра</b><span>ga-black-hole.js</span><p>Аккреционный диск жадно пожирает свет — смотри, но не подходи.</p></div></div>
+    <div class="card"><div class="box" id="v-glassrain"></div><div class="meta"><b>Дождь на стекле</b><span>ga-glass-rain.js</span><p>Капли ползут по стеклу и расходятся кругами.</p></div></div>
+    <div class="card"><div class="box" id="v-magnet"></div><div class="meta"><b>Магнитное поле</b><span>ga-magnet-field.js</span><p>Железные опилки выстраиваются по указке невидимого магнита.</p></div></div>
+    <div class="card"><div class="box" id="v-jelly"></div><div class="meta"><b>Медузы</b><span>ga-jelly-float.js</span><p>Шесть медуз дрейфуют вверх и шевелят щупальцами.</p></div></div>
+    <div class="card"><div class="box" id="v-boids"></div><div class="meta"><b>Стая</b><span>ga-boids.js</span><p>Мурмурация: птицы-пиксели тянутся к курсору, как к хлебу.</p></div></div>
+    <div class="card"><div class="box" id="v-city"></div><div class="meta"><b>Ночной город</b><span>ga-city-night.js</span><p>Сто шестьдесят окон моргают: кто-то не спит.</p></div></div>
+    <div class="card"><div class="box" id="v-moire"></div><div class="meta"><b>Муаровые кольца</b><span>ga-moire-rings.js</span><p>Два центра кругов спорят — рождается муар.</p></div></div>
+    <div class="card"><div class="box" id="v-tetris"></div><div class="meta"><b>Тетрис-дождь</b><span>ga-tetris-rain.js</span><p>Фигурки падают, но складывать их некому.</p></div></div>
+    <div class="card"><div class="box" id="v-ocean"></div><div class="meta"><b>Девятый вал</b><span>ga-ocean-layers.js</span><p>Пять волн идут друг на друга полупрозрачным строем.</p></div></div>
+    <div class="card"><div class="box" id="v-bacteria"></div><div class="meta"><b>Деление бактерий</b><span>ga-bacteria.js</span><p>Клетки растут, лопаются и делятся пополам.</p></div></div>
+    <div class="card"><div class="box" id="v-radar"></div><div class="meta"><b>Сонар</b><span>ga-radar-sonar.js</span><p>Луч радара крутится и будит спящие отметки.</p></div></div>
+    <div class="card"><div class="box" id="v-iso"></div><div class="meta"><b>Изометрия</b><span>ga-iso-cubes.js</span><p>Двадцать два куба прыгают на батуте.</p></div></div>
+    <div class="card"><div class="box" id="v-confetti"></div><div class="meta"><b>Конфетти-шторм</b><span>ga-confetti-storm.js</span><p>Восемьдесят бумажек крутятся в вихре праздника.</p></div></div>
+    <div class="card"><div class="box" id="v-eyes"></div><div class="meta"><b>Глаза из темноты</b><span>ga-spider-eyes.js</span><p>Четырнадцать глаз с веками моргают и следят за курсором.</p></div></div>
+    <div class="card"><div class="box" id="v-clock"></div><div class="meta"><b>Песочные часы</b><span>ga-clock-particles.js</span><p>Семьдесят песчинок сыплются сквозь горловину времени.</p></div></div>
+    <div class="card"><div class="box" id="v-plasma"></div><div class="meta"><b>Плазменное море</b><span>ga-plasma-sea.js</span><p>Жидкий синус переливается всеми палитрами сразу.</p></div></div>
+  </div>
+  <div class="row">
+    <figure><span class="ga-sp-ring"></span><figcaption>Кольцо ожидания · ga-spin-ring.css</figcaption></figure>
+    <figure><span class="ga-sp-dots"><i></i><i></i><i></i></span><figcaption>Азбука Морзе · ga-spin-dots.css</figcaption></figure>
+    <figure><span class="ga-sp-wave"><i></i><i></i><i></i><i></i><i></i></span><figcaption>Шёпот · ga-spin-wave.css</figcaption></figure>
+    <figure><span class="ga-sp-glitch"></span><figcaption>Глитч-куб · ga-spin-glitch.css</figcaption></figure>
+  </div>
+  <div style="height:20vh"></div>
+</div>
+<div class="pop" id="pop" hidden><div class="panel"><h3 id="pp-t"></h3><div class="file" id="pp-f"></div><div id="pp-b"></div><textarea id="pp-code" readonly rows="6" spellcheck="false"></textarea><div class="pbtns"><button id="pp-c">Копировать код</button><button id="pp-r">Сброс</button><button id="pp-x">Закрыть</button></div></div></div>
+<script src="../dist/ga-bg-flow.js?v=2"></script>
+<script src="../dist/ga-ribbon.js?v=2"></script>
+<script src="../dist/ga-dots.js?v=2"></script>
+<script src="../dist/ga-topo.js?v=2"></script>
+<script src="../dist/ga-dot-terrain.js?v=2"></script>
+<script src="../dist/ga-rain-fall.js?v=2"></script>
+<script src="../dist/ga-kaleido.js?v=2"></script>
+<script src="../dist/ga-static-noise.js?v=2"></script>
+<script src="../dist/ga-dna-helix.js?v=2"></script>
+<script src="../dist/ga-black-hole.js?v=2"></script>
+<script src="../dist/ga-glass-rain.js?v=2"></script>
+<script src="../dist/ga-magnet-field.js?v=2"></script>
+<script src="../dist/ga-jelly-float.js?v=2"></script>
+<script src="../dist/ga-boids.js?v=2"></script>
+<script src="../dist/ga-city-night.js?v=2"></script>
+<script src="../dist/ga-moire-rings.js?v=2"></script>
+<script src="../dist/ga-tetris-rain.js?v=2"></script>
+<script src="../dist/ga-ocean-layers.js?v=2"></script>
+<script src="../dist/ga-bacteria.js?v=2"></script>
+<script src="../dist/ga-radar-sonar.js?v=2"></script>
+<script src="../dist/ga-iso-cubes.js?v=2"></script>
+<script src="../dist/ga-confetti-storm.js?v=2"></script>
+<script src="../dist/ga-spider-eyes.js?v=2"></script>
+<script src="../dist/ga-clock-particles.js?v=2"></script>
+<script src="../dist/ga-plasma-sea.js?v=2"></script>
+<script>
+  const H = [
+    gaBgFlow.mount(document.getElementById('v-flow'), { count: 550 }),
+    gaRibbon.mount(document.getElementById('v-ribbon')),
+    gaDots.mount(document.getElementById('v-dots')),
+    gaTopo.mount(document.getElementById('v-topo')),
+    gaDotTerrain.mount(document.getElementById('v-terrain')),
+    gaRainFall.mount(document.getElementById('v-rain')),
+    gaKaleido.mount(document.getElementById('v-kaleido')),
+    gaStaticNoise.mount(document.getElementById('v-noise')),
+    gaDnaHelix.mount(document.getElementById('v-dna')),
+    gaBlackHole.mount(document.getElementById('v-blackhole')),
+    gaGlassRain.mount(document.getElementById('v-glassrain')),
+    gaMagnetField.mount(document.getElementById('v-magnet')),
+    gaJellyFloat.mount(document.getElementById('v-jelly')),
+    gaBoids.mount(document.getElementById('v-boids')),
+    gaCityNight.mount(document.getElementById('v-city')),
+    gaMoireRings.mount(document.getElementById('v-moire')),
+    gaTetrisRain.mount(document.getElementById('v-tetris')),
+    gaOceanLayers.mount(document.getElementById('v-ocean')),
+    gaBacteria.mount(document.getElementById('v-bacteria')),
+    gaRadarSonar.mount(document.getElementById('v-radar')),
+    gaIsoCubes.mount(document.getElementById('v-iso')),
+    gaConfettiStorm.mount(document.getElementById('v-confetti')),
+    gaSpiderEyes.mount(document.getElementById('v-eyes')),
+    gaClockParticles.mount(document.getElementById('v-clock')),
+    gaPlasmaSea.mount(document.getElementById('v-plasma')),
+  ];
+  addEventListener('beforeunload', () => H.forEach(h => h.destroy()));
+  // Параметры эффектов: BOX идёт строго в порядке массива H выше (первые 25 — JS, дальше CSS).
+  const BOX = {
+    "ga-bg-flow.js": ["v-flow", "gaBgFlow"], "ga-ribbon.js": ["v-ribbon", "gaRibbon"],
+    "ga-dots.js": ["v-dots", "gaDots"], "ga-topo.js": ["v-topo", "gaTopo"],
+    "ga-dot-terrain.js": ["v-terrain", "gaDotTerrain"], "ga-rain-fall.js": ["v-rain", "gaRainFall"],
+    "ga-kaleido.js": ["v-kaleido", "gaKaleido"], "ga-static-noise.js": ["v-noise", "gaStaticNoise"],
+    "ga-dna-helix.js": ["v-dna", "gaDnaHelix"], "ga-black-hole.js": ["v-blackhole", "gaBlackHole"],
+    "ga-glass-rain.js": ["v-glassrain", "gaGlassRain"], "ga-magnet-field.js": ["v-magnet", "gaMagnetField"],
+    "ga-jelly-float.js": ["v-jelly", "gaJellyFloat"], "ga-boids.js": ["v-boids", "gaBoids"],
+    "ga-city-night.js": ["v-city", "gaCityNight"], "ga-moire-rings.js": ["v-moire", "gaMoireRings"],
+    "ga-tetris-rain.js": ["v-tetris", "gaTetrisRain"], "ga-ocean-layers.js": ["v-ocean", "gaOceanLayers"],
+    "ga-bacteria.js": ["v-bacteria", "gaBacteria"], "ga-radar-sonar.js": ["v-radar", "gaRadarSonar"],
+    "ga-iso-cubes.js": ["v-iso", "gaIsoCubes"], "ga-confetti-storm.js": ["v-confetti", "gaConfettiStorm"],
+    "ga-spider-eyes.js": ["v-eyes", "gaSpiderEyes"], "ga-clock-particles.js": ["v-clock", "gaClockParticles"],
+    "ga-plasma-sea.js": ["v-plasma", "gaPlasmaSea"],
+    "ga-spin-ring.css": [null, ".ga-sp-ring"], "ga-spin-dots.css": [null, ".ga-sp-dots"],
+    "ga-spin-wave.css": [null, ".ga-sp-wave"], "ga-spin-glitch.css": [null, ".ga-sp-glitch"],
+  };
+  const JSFILES = Object.keys(BOX).filter(f => f.endsWith(".js"));
+  console.assert(H.length === JSFILES.length, "BOX/H order mismatch");
+  const live = {};
+  JSFILES.forEach((f, i) => live[f] = H[i]);
+  const PALS = {
+    abyss: { bg: "#070b14", c: ["#5eead4", "#60a5fa", "#a78bfa", "#f472b6"] },
+    ember: { bg: "#0e0a08", c: ["#fbbf24", "#fb7185", "#f97316", "#fde68a"] },
+    moss: { bg: "#060d0b", c: ["#a3e635", "#34d399", "#22d3ee", "#e7e5e4"] },
+    mono: { bg: "#0a0a0b", c: ["#fafafa", "#a1a1aa", "#52525b", "#e4e4e7"] },
+  };
+  const kb = b => (b / 1024).toFixed(2);
+  const fmt = v => typeof v === "number" ? String(Math.round(v * 1000) / 1000) : v;
+  let CAT = null, CATPAL = "abyss";
+  const state = {};
+  async function cat() {
+    if (!CAT) {
+      const j = await (await fetch("../dist/effects.json?v=2")).json();
+      CAT = Object.fromEntries(j.effects.map(e => [e.file, e]));
+      CATPAL = j.palette || "abyss";
+    }
+    return CAT;
+  }
+  function defaults(e) {
+    const st = {};
+    for (const [k, t, mn, mx, s, d] of e.params) st[k] = d;
+    if (e.kind === "canvas") {
+      const p = PALS[CATPAL] || PALS.abyss;
+      st.bg = p.bg; st.colors = p.c.slice(); st.pal = CATPAL;
+    }
+    return st;
+  }
+  function optsOf(f) {
+    const e = CAT[f], st = state[f], o = {};
+    for (const [k] of e.params) o[k] = st[k];
+    if (e.kind === "canvas") { o.bg = st.bg; o.colors = st.colors; }
+    return o;
+  }
+  function nonDef(f) {
+    const e = CAT[f], st = state[f], o = {};
+    for (const [k, t, mn, mx, s, d] of e.params) {
+      if (st[k] !== d) o[k] = st[k];
+    }
+    if (e.kind === "canvas") {
+      const p = PALS[CATPAL] || PALS.abyss;
+      if (st.bg !== p.bg) o.bg = st.bg;
+      if (JSON.stringify(st.colors) !== JSON.stringify(p.c)) o.colors = st.colors;
+    }
+    return o;
+  }
+  function refreshCode(f) {
+    const e = CAT[f], o = nonDef(f);
+    let code;
+    if (e.kind === "css") {
+      const vars = [];
+      for (const [k, t, mn, mx, s, d] of e.params) {
+        const v = state[f][k];
+        if (v === d) continue;
+        vars.push(k === "size" ? "--ga-z:" + v : "--ga-d:" + (Math.round(1 / v * 1000) / 1000));
+      }
+      const demo = vars.length ? e.demo.replace("<span", `<span style="${vars.join(";")}"`) : e.demo;
+      code = `<link rel="stylesheet" href="${e.file}">\n${demo}`;
+    } else {
+      const args = Object.keys(o).length ? "," + JSON.stringify(o) : "";
+      code = `<div id="fx" style="position:relative;min-height:230px;overflow:hidden"></div>\n<script src="${e.file}"><\/script>\n<script>${e.global}.mount(document.getElementById('fx')${args});<\/script>`;
+    }
+    document.getElementById("pp-code").value = code;
+  }
+  function apply(f) {
+    refreshCode(f);
+    const e = CAT[f], [box, glob] = BOX[f];
+    if (e.kind === "css") {
+      const demo = document.querySelector(".row figure " + glob) || document.querySelector(glob);
+      if (!demo) return;
+      for (const [k, t, mn, mx, s, d] of e.params) {
+        const v = state[f][k], prop = k === "size" ? "--ga-z" : "--ga-d", val = k === "speed" ? 1 / v : v;
+        if (val === d || (k === "speed" && v === 1)) demo.style.removeProperty(prop);
+        else demo.style.setProperty(prop, k === "speed" ? String(Math.round(val * 1000) / 1000) + "" : val);
+      }
+      return;
+    }
+    live[f].destroy();
+    live[f] = window[glob].mount(document.getElementById(box), optsOf(f));
+  }
+  function row(nm, input, val) {
+    const d = document.createElement("div");
+    d.className = "prow";
+    const l = document.createElement("label");
+    const s = document.createElement("span");
+    s.className = "nm"; s.textContent = nm;
+    l.append(s, input);
+    if (val !== undefined) { const v = document.createElement("span"); v.className = "val"; v.textContent = val; l.append(v); input._val = v; }
+    d.append(l);
+    return d;
+  }
+  function ctl(f, p) {
+    const [k, t, mn, mx, st, d, label] = p, cur = state[f];
+    if (t === "toggle") {
+      const c = document.createElement("input");
+      c.type = "checkbox"; c.checked = !!cur[k];
+      c.onchange = () => { cur[k] = c.checked ? 1 : 0; apply(f); };
+      return row(label, c);
+    }
+    if (t === "color") {
+      const c = document.createElement("input");
+      c.type = "color"; c.value = cur[k];
+      c.oninput = () => { cur[k] = c.value; apply(f); };
+      return row(label, c);
+    }
+    const r = document.createElement("input");
+    r.type = "range"; r.min = mn; r.max = mx; r.step = st; r.value = cur[k];
+    const upd = () => {
+      cur[k] = t === "int" ? Math.round(+r.value) : +r.value;
+      r._val.textContent = fmt(cur[k]);
+      apply(f);
+    };
+    r.oninput = upd;
+    return row(label, r, fmt(cur[k]));
+  }
+  function openPop(f) {
+    const e = CAT[f];
+    if (!state[f]) state[f] = defaults(e);
+    document.getElementById("pp-t").textContent = e.title;
+    document.getElementById("pp-f").textContent = `${f} · ${kb(e.bytes)} / ${kb(e.budget)} КБ`;
+    const b = document.getElementById("pp-b");
+    b.innerHTML = "";
+    for (const p of e.params) b.appendChild(ctl(f, p));
+    if (e.kind === "canvas") {
+      const c = document.createElement("input");
+      c.type = "color"; c.value = state[f].bg;
+      c.oninput = () => { state[f].bg = c.value; apply(f); };
+      b.appendChild(row("Фон", c));
+      const s = document.createElement("select");
+      for (const k of Object.keys(PALS)) {
+        const o = document.createElement("option");
+        o.value = k; o.textContent = k; if (state[f].pal === k) o.selected = true;
+        s.append(o);
+      }
+      s.onchange = () => { state[f].pal = s.value; state[f].colors = PALS[s.value].c.slice(); apply(f); };
+      b.appendChild(row("Цвета", s));
+    }
+    document.getElementById("pp-r").onclick = () => { state[f] = defaults(e); apply(f); openPop(f); };
+    refreshCode(f);
+    document.getElementById("pop").hidden = false;
+  }
+  document.getElementById("pp-x").onclick = () => document.getElementById("pop").hidden = true;
+  document.getElementById("pp-c").onclick = async () => {
+    const t = document.getElementById("pp-code");
+    try { await navigator.clipboard.writeText(t.value); }
+    catch { t.select(); document.execCommand("copy"); }
+    const b = document.getElementById("pp-c"), s = b.textContent;
+    b.textContent = "Готово!";
+    setTimeout(() => b.textContent = s, 1200);
+  };
+  document.getElementById("pop").addEventListener("click", ev => { if (ev.target.id === "pop") ev.target.hidden = true; });
+  addEventListener("keydown", ev => { if (ev.key === "Escape") document.getElementById("pop").hidden = true; });
+  function badge(txt) {
+    const s = document.createElement("span");
+    s.className = "bgt"; s.textContent = txt;
+    return s;
+  }
+  function gear(f) {
+    const g = document.createElement("button");
+    g.className = "gear"; g.textContent = "⚙"; g.title = "Параметры";
+    g.onclick = () => openPop(f);
+    return g;
+  }
+  (async () => {
+    const c = await cat();
+    document.querySelectorAll(".card .meta").forEach(m => {
+      const f = m.querySelector("span")?.textContent.trim();
+      if (!f || !c[f] || !BOX[f]) return;
+      m.querySelector("b").after(badge(`${kb(c[f].bytes)} / ${kb(c[f].budget)} КБ`));
+      m.appendChild(gear(f));
+    });
+    document.querySelectorAll(".row figure").forEach(fg => {
+      const m = (fg.querySelector("figcaption")?.textContent || "").match(/(ga-[a-z-]+\.css)/);
+      if (!m || !c[m[1]]) return;
+      fg.append(badge(`${kb(c[m[1]].bytes)} / ${kb(c[m[1]].budget)} КБ`), gear(m[1]));
+    });
+  })();
+</script>
+</body>
+</html>
