@@ -1,5 +1,7 @@
 # gen-art-zero
 
+[![Дыхание толпы (ember) — живое демо](assets/dots-ember.gif)](https://regulyarniy.github.io/gen-art/sites/)
+
 Офлайн-генератор zero-runtime generative art сниппетов.
 Рантайм-зависимостей ноль: каждый файл из `dist/` самодостаточен,
 контракт один: `mount(el, opts) -> { destroy }`.
